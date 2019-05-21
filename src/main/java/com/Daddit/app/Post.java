@@ -1,34 +1,44 @@
 package com.Daddit.app;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Post {
+
     @Id
     @GeneratedValue
     private Long id;
     private String content;
-//    @ManyToMany
-//    private List<Category> categories;
-    @OneToMany
-    private List<Vote> votes;
+    
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private List<Category> categories;
+    
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true )
+    private List<Vote> votes = new ArrayList();
+    
     private LocalDate created;
+
+    @OneToOne
+    private Dad dad;
 
     public Post() {
     }
 
-    public Post(String content, /*List<Category> categories,*/ List<Vote> votes) {
+    public Post(String content, List<Category> categories, List<Vote> votes, Dad dad) {
         this.content = content;
-//        this.categories = categories;
+        this.categories = categories;
         this.votes = votes;
         this.created = LocalDate.now();
+        this.dad = dad;
     }
 
     public Long getId() {
@@ -47,13 +57,13 @@ public class Post {
         this.content = content;
     }
 
-//    public List<Category> getCategories() {
-//        return categories;
-//    }
-//
-//    public void setCategories(List<Category> categories) {
-//        this.categories = categories;
-//    }
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
 
     public List<Vote> getVotes() {
         return votes;
@@ -70,8 +80,13 @@ public class Post {
     public void setCreated(LocalDate created) {
         this.created = created;
     }
-    
-    
-    
-    
+
+    public Dad getDad() {
+        return dad;
+    }
+
+    public void setDad(Dad dad) {
+        this.dad = dad;
+    }
+
 }

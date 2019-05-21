@@ -3,6 +3,7 @@ package com.Daddit.app;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 @Service("postService")
@@ -18,5 +19,10 @@ public class PostService {
     Optional<Post> findPostById(Long id) {
         return postRepo.findById(id);
     }
+    
+//    @Query()
+//    List<Post> findPostsFromDad(Long dadId) {
+//        return postRepo.findByDadWhereId(dadId);
+//    }
 
 }

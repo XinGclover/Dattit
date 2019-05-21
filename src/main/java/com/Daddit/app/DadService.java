@@ -23,24 +23,18 @@ public class DadService {
         return dadRepo.findAll();
     }
 
-//    public boolean addDad(Dad dad) {
-//        //check if dad exist
-//        if (!dadRepo.findByUsernameAndPassword(dad.getUsername(), dad.getPassword()).isPresent()) {
-//            //add a dad
-//            dadRepo.save(dad);
-//            
-//            //return true or false
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//        
-//        
-//        
-//        
-//        
-//        
-//    }
+    public Dad addDad(Dad dad) {
+        //check if dad exist
+        if (!dadRepo.findByUsername(dad.getUsername()).isPresent()) {
+            //add a dad
+            dadRepo.save(dad);
+            
+            //return true or false
+            return dad;
+        }
+        else {
+            return null;
+        }
+    }
 
 }

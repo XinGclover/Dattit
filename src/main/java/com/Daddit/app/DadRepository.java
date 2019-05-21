@@ -8,5 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DadRepository extends JpaRepository<Dad, Long>{
     
+    public Optional<Dad> findByUsername(String username);
+    
     public Optional<Dad> findByUsernameAndPassword(String username, String password);
+    
 }

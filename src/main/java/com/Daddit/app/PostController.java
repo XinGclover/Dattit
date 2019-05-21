@@ -3,6 +3,7 @@ package com.Daddit.app;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +19,10 @@ public class PostController {
         return postService.findAllPosts();
     }
     
+//    @GetMapping("/{dadId}")
+//    public List<Post> getPostsFromDad(@PathVariable Long dadId) {
+//        return postService.findPostsFromDad(dadId);
+//    }
     
 
 }
