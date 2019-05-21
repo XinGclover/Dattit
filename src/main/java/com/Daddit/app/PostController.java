@@ -24,5 +24,10 @@ public class PostController {
         return postService.findPostsFromDad(dadId);
     }
     
+    @GetMapping("/getTop10")
+    public List<Post> getTop10Posts() {
+        return postService.findtop10Posts();
+    }
+    
 
 }

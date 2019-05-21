@@ -22,7 +22,7 @@ public class Post {
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Category> categories;
     
-    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true )
+    @OneToMany( cascade = CascadeType.ALL)
     private List<Vote> votes = new ArrayList();
     
     private LocalDate created;
@@ -71,6 +71,8 @@ public class Post {
 
     public void setVotes(List<Vote> votes) {
         this.votes = votes;
+        
+        
     }
 
     public LocalDate getCreated() {
