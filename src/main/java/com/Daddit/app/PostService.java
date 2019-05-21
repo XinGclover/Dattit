@@ -28,13 +28,24 @@ public class PostService {
     List<Post> findtop10Posts() {
         
         List<Post> sortedPosts = postRepo.findAll().stream()
-                .sorted(( o1, o2 ) -> o2.getVotes().stream()
+                .sorted((o1, o2) -> o2.getVotes().stream()
                     .reduce(0, (partialsum, vote) -> partialsum + vote.getVote(), Integer::sum)
                         .compareTo(o1.getVotes().stream()
                                 .reduce(0, (partialsum, vote) -> partialsum + vote.getVote(), Integer::sum)))
                 .limit(10).collect(Collectors.toList());
         
         return sortedPosts;
+    }
+    
+    List<Post> findPostsSortedByDate() {
+        return postRepo.findByOrderByCreatedDesc();
+    }
+    
+    List<Post> findAllPostInCategory(String Category) {
+        
+        
+        
+        return null;
     }
 
 }

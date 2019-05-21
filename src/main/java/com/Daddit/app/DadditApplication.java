@@ -30,8 +30,7 @@ public class DadditApplication {
             postRepo.save(new Post("This is sucha goodish post", dad1));
             postRepo.save(new Post("Best post ever", dad1));
             postRepo.save(new Post("Jokes jokes jokes", dad2));
-            postRepo.save(new Post("Lolzor", dad3));
-            
+            postRepo.save(new Post("Lolzor", dad3));            
             
             
         };

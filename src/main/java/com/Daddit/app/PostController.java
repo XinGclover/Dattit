@@ -29,5 +29,9 @@ public class PostController {
         return postService.findtop10Posts();
     }
     
+    @GetMapping("/getAllSortedByDate")
+    public List<Post> getAllSortedByDate() {
+        return postService.findPostsSortedByDate();
+    }
 
 }
