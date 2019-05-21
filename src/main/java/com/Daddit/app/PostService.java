@@ -2,6 +2,7 @@ package com.Daddit.app;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,9 @@ public class PostService {
         return postRepo.findById(id);
     }
     
-//    @Query()
-//    List<Post> findPostsFromDad(Long dadId) {
-//        return postRepo.findByDadWhereId(dadId);
-//    }
+    
+    List<Post> findPostsFromDad(Long dadId) {
+        return postRepo.findAll().stream().filter(p -> p.getDad().getId() == dadId).collect(Collectors.toList());
+    }
 
 }

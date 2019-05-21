@@ -19,10 +19,10 @@ public class PostController {
         return postService.findAllPosts();
     }
     
-//    @GetMapping("/{dadId}")
-//    public List<Post> getPostsFromDad(@PathVariable Long dadId) {
-//        return postService.findPostsFromDad(dadId);
-//    }
+    @GetMapping("/{dadId}")
+    public List<Post> getPostsFromDad(@PathVariable Long dadId) {
+        return postService.findPostsFromDad(dadId);
+    }
     
 
 }
