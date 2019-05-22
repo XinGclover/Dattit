@@ -31,6 +31,12 @@ public class Dad {
         this.moderator = moderator;
     }
 
+    public Dad(String username, String password) {
+        this.username = username;
+        this.password = password;
+        this.moderator = false;
+    }
+
     public long getId() {
         return id;
     }
