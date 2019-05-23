@@ -16,18 +16,14 @@
 
     </head>
 
-    <body>
-
+    <body style="max-width: 100vw; overflow-x: hidden;">
 
 
         <header class="container-fluid bg-light border sticky-top p-2">
 
-
-
-
             <div class="row">
                 <div  class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2">
-                    <img id="daddit" src="images/Dattit-logo.png" class="img-fluid float-left" alt="">
+                    <img id="daddit" src="images/Dattit-logo.png" class="img-fluid float-left" style="width: 100%;" alt="Daddit logo">
                 </div>
                 <div class=" col-10 col-sm-4 col-md-6 col-xl-8 my-auto">
                     <div class="form-group has-search">
@@ -68,78 +64,75 @@
         </header>
 
         <div class="row justify-content-md-center mt-6">
-            <main class="col col-sm-7 pt-4 " id="main">
 
+            <main class="col col-sm-7 pt-4 " >
 
+                <div style="text-align: center">
+                    <form action="http://localhost:8080/d" method="GET" name="loginForm" style="font-size: 12px;">
 
-                <!--                <div class="card mb-3 ">
-                                    <div class="row no-gutters">
-                                        <div class="col-md-1 bg-light text-center">
-                                            <a href=""> <i class="fas fa-chevron-up"></i></a> <br>
-                                            39k <br>
-                                            <a href=""> <i class="fas fa-chevron-down"></i></a>
-                                        </div>
-                                        <div class="col-md-11">
-                                            <div class="card-body">
-                                                <p class="card-header bg-white pt-0"><a href="">r/dadjokes</a> • Posted by u/testing2 3hours
-                                                    ago</p>
-                                                <h5 class="card-title">Dadiest Joke</h5>
-                                                <p class="card-text">What did the router say to the doctor? <br>
-                                                    “It hurts when IP”
-                                                </p>
-                                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
+                        <label class="loginLabel">Username:</label>
+                        <input type="text" name="login_username" id="login_username" autofocus>
+                        <label class=loginLabel">Password:</label>
+                        <input type="text" name="login_password" id="login_password">
+                        <input value="Login" type="submit" onclick="createNewDadAccount()"  class="btn btn-primary">
+                    </form>
+                </div>
+                
 
+                <section id="main"></section>
+
+                <footer style="text-align: center; padding: 10px;">
+                    &copy;2019 Your dad.
+                </footer>
 
             </main>
+
             <aside class="col col-sm-3 pt-4">
-                <div class="card sticky-top" >
+
+                <div class="card" >
                     <div class="card-header bg-primary">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title"><img src="images/Daddit_small_logo.png" alt="" style="max-width: 32px;">
                             daddit</h5>
                         <p class="card-text">The best dadjokes on the internet.</p>
-                        <a href="#" class="btn btn-primary">Create Post</a>
+                        <a href="javascript: void(0);" class="btn btn-primary" onclick="createFormForPost();">Create Post</a>
+
+                        <form id="createNewPostForm" style="display: none; padding-top: 12px;">
+                            <label>Headline</label><br><input type="text"><br>
+                            <label>Content </label><textarea style="width: 100%; height: 80px;"></textarea><br>
+                            <label>Category </label><br><input type="text"><br><br>
+                            <input type="submit" value="Submit funny" class="btn btn-primary">
+                        </form>
                     </div>
                 </div>
+
                 <div class="card mt-3" >
-                    <div class="card-header bg-primary">
-                    </div>
+                    <div class="card-header bg-primary"></div>
                     <div class="card-body">
-                        <h5 class="card-title">All Spice</h5>
-                        <p class="card-text">Fragrance form men</p>
-                        <a href="#" class="btn btn-primary">Find out more!</a>
+                        <h5 class="card-title">Active users</h5>
+                        <div id="allDads"></div>    
                     </div>
                 </div>
+
+                <div class="card mt-3" >
+                    <div class="card-header bg-primary"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Create account</h5>
+                        <form action="http://localhost:8080/dad/newDad" method="POST" name="createDadForm">
+                            <label class="createDadLabel">Username:</label>
+                            <input type="text" name="username" id="username"><br>
+                            <label class="createDadLabel">Password:</label>
+                            <input type="password" name="password" id="password"><br><br>
+                            <input value="Submit" type="submit" onclick="createNewDadAccount()" class="btn btn-primary">
+                        </form>  
+                    </div>
+                </div>
+
             </aside>
+
         </div>
-
-
-        <section>
-            <header>
-                <h1>All dads listed</h1>
-            </header>
-
-            <div id="allDads"></div>
-        </section>
-
-        <section>
-            <header>
-                <h1>Create Account</h1>
-                <form action="http://localhost:8080/dad/newDad" method="POST" name="myForm">
-                    <p><label>Username:</label>
-                        <input type="text" name="username" id="username"></p>
-                    <p><label>Password:</label>
-                        <input type="text" name="password" id="password"></p>
-                    <input value="Submit" type="submit" onclick="createNewDadAccount()">
-                </form>
-            </header>
-        </section>
-
+        <br>
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
                 integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
@@ -151,105 +144,7 @@
                 integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
         </script>
 
-        <script>
-            var allDadsURL = "http://localhost:8080/dad/getAll";
-            var allPostsURL = "http://localhost:8080/post/getAll";
-
-            getAllDads(allDadsURL);
-            listAllPosts(allPostsURL);
-
-            function listAllPosts(url) {
-                var request = new XMLHttpRequest();
-                request.open('GET', url, true);
-                request.onload = function () {
-                    if (request.status >= 200 && request.status < 400) {
-                        var data = JSON.parse(request.responseText);
-                        var main = document.getElementById("main");
-                        for (var post in data) {
-
-                            var postItem = document.createElement('div');
-                            postItem.setAttribute('class', 'mb-3');
-                            postItem.innerHTML = `<div class="row no-gutters">
-                        <div class="col-md-1 bg-light text-center">
-                            <a href=""> <i class="fas fa-chevron-up"></i></a> <br>
-                            39k <br>
-                            <a href=""> <i class="fas fa-chevron-down"></i></a>
-                        </div>
-                        <div class="col-md-11">
-                            <div class="card-body">
-                                <p class="card-header bg-white pt-0"><a href="">r/dadjokes</a> • Posted by u/`
-                                    + data[post].dad.username + ` `
-                                    + data[post].created + `
-                    <h5 class="card-title">` + "HEADLINE!" + `</h5>
-                            <p class="card-text">` + data[post].content + `
-                            </p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    </div>
-                    </div>
-                    </div>
-                        `;
-
-                            main.appendChild(postItem);
-
-                        }
-                    } else {
-                        alert('Some undefined error while reading from the funny dad server!');
-                    }
-                };
-
-                request.onerror = function () {
-                    alert('Error connecting to server!');
-                };
-                request.send();
-            }
-
-
-
-            function getAllDads(url) {
-                var request = new XMLHttpRequest();
-                request.open('GET', url, true);
-                request.onload = function () {
-                    if (request.status >= 200 && request.status < 400) {
-                        var data = JSON.parse(request.responseText);
-                        var allDads = document.getElementById("allDads");
-                        var newList = document.createElement('ul');
-                        allDads.appendChild(newList);
-                        allDads.style.listStyle = 'none';
-                        for (var dad in data) {
-                            var newItem = document.createElement('li');
-                            newItem.innerHTML = "<a href='http://localhost:8080/post/" + data[dad].id + " '> " + data[dad].username + "</a>";
-                            allDads.appendChild(newItem);
-                        }
-                    } else {
-                        alert('Some undefined error while reading from the funny dad server!');
-                    }
-                };
-
-                request.onerror = function () {
-                    alert('Error connecting to server!');
-                };
-                request.send();
-            }
-
-            function createNewDadAccount() {
-                var url = 'http://localhost:8080/dad/newDad';
-                var formData = JSON.stringify($("#myForm").serializeArray());
-                fetch(url, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                }).then(res => res.json())
-                        .then(response => console.log('Success:', JSON.stringify(response)))
-                        .catch(error => console.error('Error:', error));
-            }
-
-
-            $(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-        </script>
+        <script src="scripts.js"></script>
 
     </body>
 

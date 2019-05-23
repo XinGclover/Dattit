@@ -2,6 +2,7 @@ package com.Daddit.app;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,12 +30,84 @@ public class DadditApplication {
             dadRepo.save(dad3);
             dadRepo.save(dad4);
             
-            postRepo.save(new Post("This is sucha goodish post", dad1));
-            postRepo.save(new Post("Best post ever", dad1));
-            postRepo.save(new Post("Jokes jokes jokes", dad2));
-            postRepo.save(new Post("Lolzor", dad3));            
+
+            Post post1 = new Post("A dad walks into a bar", "My first joke",  dad1);
+
+            List<Category> categories = new ArrayList<>();
+
+            Category category1 = new Category("r-rated");
+            Category category2 = new Category("mild");
+            Category category3 = new Category("mom joke");
             
+            categories.add(category1);
+            categories.add(category2);
+            categories.add(category3);
+
+            List<Vote> votesList = new ArrayList<>();
+
+            Vote vote1 = new Vote(1, dad3, post1);
+            Vote vote2 = new Vote(1, dad2, post1);
+            Vote vote3 = new Vote(1, dad4, post1);
+            Vote vote4 = new Vote(1, dad1, post1);
+
+            votesList.add(vote1);
+            votesList.add(vote2);
+            votesList.add(vote3);
+            votesList.add(vote4);
+        
+            post1.setCategories(categories);
+            post1.setVotes(votesList);
+            postRepo.save(post1);
             
+
+            
+
+            // CREATE MULITPLE POSTS WITH VOTES
+
+
+
+            /*
+            Post post1 = new Post("A dad walks into a bar", dad1);
+            Post post2 = new Post("Your mom is so fat when she jumped for joy she got stuck", dad1);
+            
+            List<Category> categoriesForFirstPost = new ArrayList<>();
+            List<Category> categoriesForSecondPost = new ArrayList<>();
+            
+            Category category1 = new Category("r-rated");
+            Category category2 = new Category("mild");
+            Category category3 = new Category("mom joke");
+            
+            categoriesForFirstPost.add(category1);
+            categoriesForFirstPost.add(category2);
+            categoriesForFirstPost.add(category3);
+            
+            categoriesForSecondPost.add(category3);
+            
+            List<Vote> votesForFirstPost = new ArrayList<>();
+            List<Vote> votesForSecondPost = new ArrayList<>();
+            
+            Vote vote1 = new Vote(1, dad3, post1);
+            Vote vote2 = new Vote(1, dad2, post1);
+            votesForFirstPost.add(vote1);
+            votesForFirstPost.add(vote2);
+            
+            Vote vote3 = new Vote(1, dad2, post2);
+            Vote vote4 = new Vote(1, dad3, post2);
+            Vote vote5 = new Vote(1, dad4, post2);
+            votesForSecondPost.add(vote3);
+            votesForSecondPost.add(vote4);
+            votesForSecondPost.add(vote5);
+            
+            post1.setCategories(categoriesForFirstPost);
+            post1.setVotes(votesForFirstPost);
+            
+            post2.setCategories(categoriesForSecondPost);
+            post2.setVotes(votesForSecondPost);
+            
+            postRepo.save(post1);
+            postRepo.save(post2);
+  
+            */
         };
     }
 }
