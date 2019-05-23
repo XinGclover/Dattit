@@ -99,17 +99,14 @@
                         <h5 class="card-title"><img src="images/Daddit_small_logo.png" alt="" style="max-width: 32px;">
                             daddit</h5>
                         <p class="card-text">The best dadjokes on the internet.</p>
-                        <a href="#" class="btn btn-primary">Create Post</a>
-                    </div>
-                </div>
+                        <a href="#" class="btn btn-primary" onclick="createFormForPost();">Create Post</a>
 
-                <div class="card mt-3" >
-                    <div class="card-header bg-primary">
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">All Spice</h5>
-                        <p class="card-text">Fragrance form men</p>
-                        <a href="#" class="btn btn-primary">Find out more!</a>
+                        <form id="createNewPostForm" style="display: none; padding-top: 12px;">
+                            <label>Headline</label><br><input type="text"><br>
+                            <label>Content </label><textarea style="width: 100%; height: 80px;"></textarea><br>
+                            <label>Category </label><br><input type="text"><br><br>
+                            <input type="submit" value="Submit funny" class="btn btn-primary">
+                        </form>
                     </div>
                 </div>
 
@@ -129,8 +126,8 @@
                             <label class="createDadLabel">Username:</label>
                             <input type="text" name="username" id="username"><br>
                             <label class="createDadLabel">Password:</label>
-                            <input type="text" name="password" id="password"><br>
-                            <input value="Submit" type="submit" onclick="createNewDadAccount()">
+                            <input type="text" name="password" id="password"><br><br>
+                            <input value="Submit" type="submit" onclick="createNewDadAccount()" class="btn btn-primary">
                         </form>  
                     </div>
                 </div>
@@ -140,7 +137,7 @@
         </div>
 
 
-        
+
 
 
 
