@@ -23,8 +23,6 @@
         <header class="container-fluid bg-light border sticky-top p-2">
 
 
-
-
             <div class="row">
                 <div  class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2">
                     <img id="daddit" src="images/Dattit-logo.png" class="img-fluid float-left" alt="">
@@ -72,6 +70,7 @@
             <main class="col col-sm-7 pt-4 " id="main"></main>
 
             <aside class="col col-sm-3 pt-4">
+
                 <div class="card sticky-top" >
                     <div class="card-header bg-primary">
                     </div>
@@ -82,6 +81,7 @@
                         <a href="#" class="btn btn-primary">Create Post</a>
                     </div>
                 </div>
+
                 <div class="card mt-3" >
                     <div class="card-header bg-primary">
                     </div>
@@ -91,17 +91,19 @@
                         <a href="#" class="btn btn-primary">Find out more!</a>
                     </div>
                 </div>
+
+                <div class="card mt-3" >
+                    <div class="card-header bg-primary"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Active users</h5>
+                        <div id="allDads"></div>    
+                    </div>
+                </div>
+
             </aside>
         </div>
 
 
-        <section>
-            <header>
-                <h1>All dads listed</h1>
-            </header>
-
-            <div id="allDads"></div>
-        </section>
 
         <section>
             <header>
@@ -130,11 +132,13 @@
         <script>
             var allDadsURL = "http://localhost:8080/dad/getAll";
             var allPostsURL = "http://localhost:8080/post/getAll";
+            var top10Posts = "http://localhost:8080/post/getTop10";
 
             getAllDads(allDadsURL);
-            listAllPosts(allPostsURL);
+            listPosts(top10Posts);
+//            listAllPosts(allPostsURL);
 
-            function listAllPosts(url) {
+            function listPosts(url) {
                 var request = new XMLHttpRequest();
                 request.open('GET', url, true);
                 request.onload = function () {
@@ -178,12 +182,12 @@
                 };
                 request.send();
             }
-            
+
             function countVotes(votes) {
                 var currentVotes = 0;
-                
-                for (var i in votes) {    
-                        currentVotes += votes[i].vote;
+
+                for (var i in votes) {
+                    currentVotes += votes[i].vote;
                 }
                 return currentVotes;
             }
