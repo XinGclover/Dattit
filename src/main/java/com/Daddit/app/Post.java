@@ -18,6 +18,7 @@ public class Post {
     @GeneratedValue
     private Long id;
     private String content;
+    private String headline;
     
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Category> categories;
@@ -33,14 +34,16 @@ public class Post {
     public Post() {
     }
 
-    public Post(String content, Dad dad) {
+    public Post(String content, String headline, Dad dad) {
         this.content = content;
+        this.headline = headline;
         this.dad = dad;
         this.created = LocalDate.now();
     }
 
-    public Post(String content, List<Category> categories, List<Vote> votes, Dad dad) {
+    public Post(String content, String headline, List<Category> categories, List<Vote> votes, Dad dad) {
         this.content = content;
+        this.headline = headline;
         this.categories = categories;
         this.votes = votes;
         this.created = LocalDate.now();
@@ -77,8 +80,6 @@ public class Post {
 
     public void setVotes(List<Vote> votes) {
         this.votes = votes;
-        
-        
     }
 
     public LocalDate getCreated() {
@@ -95,6 +96,14 @@ public class Post {
 
     public void setDad(Dad dad) {
         this.dad = dad;
+    }
+
+    public String getHeadline() {
+        return headline;
+    }
+
+    public void setHeadline(String headline) {
+        this.headline = headline;
     }
 
 }

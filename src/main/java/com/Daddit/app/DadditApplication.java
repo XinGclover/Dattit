@@ -31,7 +31,7 @@ public class DadditApplication {
             dadRepo.save(dad4);
             
 
-            Post post1 = new Post("A dad walks into a bar", dad1);
+            Post post1 = new Post("A dad walks into a bar", "My first joke",  dad1);
 
             List<Category> categories = new ArrayList<>();
 
