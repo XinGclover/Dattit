@@ -65,7 +65,6 @@
 
         <div class="row justify-content-md-center mt-6">
 
-
             <main class="col col-sm-7 pt-4 " >
 
                 <div style="text-align: center">
@@ -81,14 +80,11 @@
 
                 <section id="main"></section>
 
-
                 <footer style="text-align: center; padding: 10px;">
                     &copy;2019 Your dad.
                 </footer>
 
             </main>
-
-
 
             <aside class="col col-sm-3 pt-4">
 
@@ -99,7 +95,7 @@
                         <h5 class="card-title"><img src="images/Daddit_small_logo.png" alt="" style="max-width: 32px;">
                             daddit</h5>
                         <p class="card-text">The best dadjokes on the internet.</p>
-                        <a href="#" class="btn btn-primary" onclick="createFormForPost();">Create Post</a>
+                        <a href="javascript: void(0);" class="btn btn-primary" onclick="createFormForPost();">Create Post</a>
 
                         <form id="createNewPostForm" style="display: none; padding-top: 12px;">
                             <label>Headline</label><br><input type="text"><br>
@@ -122,7 +118,7 @@
                     <div class="card-header bg-primary"></div>
                     <div class="card-body">
                         <h5 class="card-title">Create account</h5>
-                        <form action="http://localhost:8080/dad/newDad" method="POST" name="myForm">
+                        <form action="http://localhost:8080/dad/newDad" method="POST" name="createDadForm">
                             <label class="createDadLabel">Username:</label>
                             <input type="text" name="username" id="username"><br>
                             <label class="createDadLabel">Password:</label>
@@ -133,7 +129,7 @@
                 </div>
 
             </aside>
-            
+
         </div>
         <br>
 
