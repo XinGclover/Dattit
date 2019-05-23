@@ -1,6 +1,7 @@
 var allDadsURL = "http://localhost:8080/dad/getAll";
 var allPostsURL = "http://localhost:8080/post/getAll";
 var top10Posts = "http://localhost:8080/post/getTop10";
+var categoryUrl = "http://localhost:8080/post/category/getCategoryByName";
 
 getAllDads(allDadsURL);
 listPosts(top10Posts);
@@ -25,9 +26,9 @@ function listPosts(url) {
                         </div>
                         <div class="col-md-11">
                             <div class="card-body">
-                                <p class="card-header bg-white pt-0"><a href="">r/`
+                                <p class="card-header bg-white pt-0">r/`
                         + printCategories(data[post].categories)
-                        + `</a> • Posted by u/`
+                        + ` • Posted by u/`
                         + data[post].dad.username + ` `
                         + data[post].created + `
                     <h5 class="card-title">` + data[post].headline + `</h5>
@@ -62,9 +63,12 @@ function countVotes(votes) {
 
 function printCategories(list) {
     var allCategories = "";
+    
     for (var i in list) {
+        
         if (list[i].name !== undefined) {
-            allCategories += list[i].name + ", ";
+            allCategories += "<a href='" + categoryUrl + "/" + list[i].name + "'>" + list[i].name + "</a>, ";
+            console.log(list[i].name);
         }
     }
     return allCategories.substring(0, allCategories.length - 2);
@@ -98,7 +102,7 @@ function getAllDads(url) {
 
 function createNewDadAccount() {
     var url = 'http://localhost:8080/dad/newDad';
-    var formData = JSON.stringify($("#myForm").serializeArray());
+    var formData = JSON.stringify($("#createDadForm").serializeArray());
     fetch(url, {
         method: 'POST',
         body: formData,
@@ -108,6 +112,15 @@ function createNewDadAccount() {
     }).then(res => res.json())
             .then(response => console.log('Success:', JSON.stringify(response)))
             .catch(error => console.error('Error:', error));
+}
+
+function createFormForPost() {
+    var a = document.getElementById('createNewPostForm');
+    if (a.style.display === 'none') {
+        a.style.display = "block";
+    } else {
+        a.style.display = 'none';
+    }
 }
 
 $(function () {
