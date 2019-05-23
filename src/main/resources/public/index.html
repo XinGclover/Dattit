@@ -68,33 +68,9 @@
         </header>
 
         <div class="row justify-content-md-center mt-6">
-            <main class="col col-sm-7 pt-4 " id="main">
 
+            <main class="col col-sm-7 pt-4 " id="main"></main>
 
-
-                <!--                <div class="card mb-3 ">
-                                    <div class="row no-gutters">
-                                        <div class="col-md-1 bg-light text-center">
-                                            <a href=""> <i class="fas fa-chevron-up"></i></a> <br>
-                                            39k <br>
-                                            <a href=""> <i class="fas fa-chevron-down"></i></a>
-                                        </div>
-                                        <div class="col-md-11">
-                                            <div class="card-body">
-                                                <p class="card-header bg-white pt-0"><a href="">r/dadjokes</a> • Posted by u/testing2 3hours
-                                                    ago</p>
-                                                <h5 class="card-title">Dadiest Joke</h5>
-                                                <p class="card-text">What did the router say to the doctor? <br>
-                                                    “It hurts when IP”
-                                                </p>
-                                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
-
-
-            </main>
             <aside class="col col-sm-3 pt-4">
                 <div class="card sticky-top" >
                     <div class="card-header bg-primary">
@@ -172,12 +148,14 @@
                             postItem.innerHTML = `<div class="row no-gutters">
                         <div class="col-md-1 bg-light text-center">
                             <a href=""> <i class="fas fa-chevron-up"></i></a> <br>
-                            39k <br>
+                            ` + countVotes(data[post].votes) + `<br>
                             <a href=""> <i class="fas fa-chevron-down"></i></a>
                         </div>
                         <div class="col-md-11">
                             <div class="card-body">
-                                <p class="card-header bg-white pt-0"><a href="">r/dadjokes</a> • Posted by u/`
+                                <p class="card-header bg-white pt-0"><a href="">r/`
+                                    + printCategories(data[post].categories)
+                                    + `</a> • Posted by u/`
                                     + data[post].dad.username + ` `
                                     + data[post].created + `
                     <h5 class="card-title">` + "HEADLINE!" + `</h5>
@@ -188,9 +166,7 @@
                     </div>
                     </div>
                         `;
-
                             main.appendChild(postItem);
-
                         }
                     } else {
                         alert('Some undefined error while reading from the funny dad server!');
@@ -202,8 +178,25 @@
                 };
                 request.send();
             }
+            
+            function countVotes(votes) {
+                var currentVotes = 0;
+                
+                for (var i in votes) {    
+                        currentVotes += votes[i].vote;
+                }
+                return currentVotes;
+            }
 
-
+            function printCategories(list) {
+                var allCategories = "";
+                for (var i in list) {
+                    if (list[i].name !== undefined) {
+                        allCategories += list[i].name + ", ";
+                    }
+                }
+                return allCategories.substring(0, allCategories.length - 2);
+            }
 
             function getAllDads(url) {
                 var request = new XMLHttpRequest();
@@ -244,7 +237,6 @@
                         .then(response => console.log('Success:', JSON.stringify(response)))
                         .catch(error => console.error('Error:', error));
             }
-
 
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip();

@@ -47,8 +47,13 @@ public class DadditApplication {
 
             Vote vote1 = new Vote(1, dad3, post1);
             Vote vote2 = new Vote(1, dad2, post1);
+            Vote vote3 = new Vote(1, dad4, post1);
+            Vote vote4 = new Vote(1, dad1, post1);
+
             votesList.add(vote1);
             votesList.add(vote2);
+            votesList.add(vote3);
+            votesList.add(vote4);
         
             post1.setCategories(categories);
             post1.setVotes(votesList);
