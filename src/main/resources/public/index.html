@@ -19,9 +19,7 @@
     <body>
 
 
-
         <header class="container-fluid bg-light border sticky-top p-2">
-
 
             <div class="row">
                 <div  class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2">
@@ -67,7 +65,27 @@
 
         <div class="row justify-content-md-center mt-6">
 
-            <main class="col col-sm-7 pt-4 " id="main"></main>
+
+            <main class="col col-sm-7 pt-4 " id="main">
+
+                <div style="text-align: center">
+                <form action="http://localhost:8080/d" method="GET" name="loginForm" style="font-size: 12px;">
+                    
+                    <label>Username:</label>
+                    <input type="text" name="username" id="username" autofocus>
+                    <label>Password:</label>
+                    <input type="text" name="password" id="password">
+                    <input value="Login" type="submit" onclick="createNewDadAccount()">
+                </form>
+                </div>
+                
+
+
+
+
+            </main>
+
+
 
             <aside class="col col-sm-3 pt-4">
 
@@ -100,23 +118,32 @@
                     </div>
                 </div>
 
+                <div class="card mt-3" >
+                    <div class="card-header bg-primary"></div>
+                    <div class="card-body">
+                        <h5 class="card-title">Create account</h5>
+                        <form action="http://localhost:8080/dad/newDad" method="POST" name="myForm">
+                            <label>Username:</label>
+                            <input type="text" name="username" id="username"><br>
+                            <label>Password:</label>
+                            <input type="text" name="password" id="password"><br>
+                            <input value="Submit" type="submit" onclick="createNewDadAccount()">
+                        </form>  
+                    </div>
+                </div>
+
             </aside>
+
+
+
+
+
+
         </div>
 
 
 
-        <section>
-            <header>
-                <h1>Create Account</h1>
-                <form action="http://localhost:8080/dad/newDad" method="POST" name="myForm">
-                    <p><label>Username:</label>
-                        <input type="text" name="username" id="username"></p>
-                    <p><label>Password:</label>
-                        <input type="text" name="password" id="password"></p>
-                    <input value="Submit" type="submit" onclick="createNewDadAccount()">
-                </form>
-            </header>
-        </section>
+
 
 
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
