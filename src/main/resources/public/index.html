@@ -69,16 +69,16 @@
             <main class="col col-sm-7 pt-4 " id="main">
 
                 <div style="text-align: center">
-                <form action="http://localhost:8080/d" method="GET" name="loginForm" style="font-size: 12px;">
-                    
-                    <label>Username:</label>
-                    <input type="text" name="login_username" id="login_username" autofocus>
-                    <label>Password:</label>
-                    <input type="text" name="login_password" id="login_password">
-                    <input value="Login" type="submit" onclick="createNewDadAccount()">
-                </form>
+                    <form action="http://localhost:8080/d" method="GET" name="loginForm" style="font-size: 12px;">
+
+                        <label class="loginLabel">Username:</label>
+                        <input type="text" name="login_username" id="login_username" autofocus>
+                        <label class=loginLabel">Password:</label>
+                        <input type="text" name="login_password" id="login_password">
+                        <input value="Login" type="submit" onclick="createNewDadAccount()">
+                    </form>
                 </div>
-                
+
 
 
 
@@ -123,9 +123,9 @@
                     <div class="card-body">
                         <h5 class="card-title">Create account</h5>
                         <form action="http://localhost:8080/dad/newDad" method="POST" name="myForm">
-                            <label>Username:</label>
+                            <label class="createDadLabel">Username:</label>
                             <input type="text" name="username" id="username"><br>
-                            <label>Password:</label>
+                            <label class="createDadLabel">Password:</label>
                             <input type="text" name="password" id="password"><br>
                             <input value="Submit" type="submit" onclick="createNewDadAccount()">
                         </form>  
