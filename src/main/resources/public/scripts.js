@@ -73,6 +73,70 @@ function printCategories(list) {
     }
     return allCategories.substring(0, allCategories.length - 2);
 }
+var currentDad;
+
+
+function CurrentDad(userName, moderator) {
+    this.userName = userName;
+    this.moderator = moderator;
+}
+
+function setCurrentUser(username, moderator) {
+    currentDad = new CurrentDad(username, moderator);
+    sessionStorage.setItem('username', JSON.stringify(currentDad.userName));
+    sessionStorage.setItem('moderator', JSON.stringify(currentDad.moderator));
+}
+
+function logout() {
+    sessionStorage.setItem('username', null);
+    sessionStorage.setItem('moderator', null);
+    document.getElementById('isloggedin').style.display = "none";
+    document.getElementById('logoutbutton').style.display = "none";
+    document.getElementById('loginForm').style.display = "block";
+}
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get('username');
+    const moderator = urlParams.get('moderator');
+    setCurrentUser(name, moderator);
+
+     // alert(currentDad.userName + " : " + currentDad.moderator);
+     var loggedindiv = document.getElementById('isloggedin');
+
+    if (currentDad.userName !== null) {
+        
+        document.getElementById('loginForm').style.display = "none";
+        loggedindiv.innerHTML = "Welcome <b>" + currentDad.userName + "</b> ";
+        var logoutButton = document.createElement('input');
+        logoutButton.setAttribute('type','button');
+        logoutButton.setAttribute('id','logoutbutton');
+        logoutButton.setAttribute('value','Logout');
+        logoutButton.setAttribute('class','btn btn-primary');
+        logoutButton.setAttribute('onclick','logout()');
+        loggedindiv.appendChild(logoutButton);
+    }
+
+
+
+//function login() {
+//    const urlParams = new URLSearchParams(window.location.search);
+//    const name = urlParams.get('login_username');
+//    const password = urlParams.get('login_password');
+//    var url = "http://localhost:8080/dad/" + name + "/" + password; 
+//    var request = new XMLHttpRequest();
+//    request.open('GET', url, true);
+//    request.onload = function () {
+//        alert('yay');
+//        if (request.status >= 200 && request.status < 400) {
+//            var data = JSON.parse(request.responseText);
+//            console.log(dada.userName + data.moderator)
+//            setCurrentUser(data.userName, data.moderator);
+//            
+//        } else {
+//            alert('You blew it! Not logged in!');
+//        }
+//    };
+//}
 
 function getAllDads(url) {
     var request = new XMLHttpRequest();
@@ -99,6 +163,7 @@ function getAllDads(url) {
     };
     request.send();
 }
+;
 
 function createNewDadAccount() {
     var url = 'http://localhost:8080/dad/addDad';

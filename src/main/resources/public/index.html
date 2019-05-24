@@ -68,15 +68,18 @@
             <main class="col col-sm-7 pt-4 " >
 
                 <div style="text-align: center">
-                    <form action="http://localhost:8080/noLoginMethodYet" method="GET" name="loginForm" style="font-size: 12px;">
-
+                    <form action="http://localhost:8080/dad/login" method="POST" name="loginForm" id="loginForm" style="font-size: 12px;">
                         <label class="loginLabel">Username:</label>
                         <input type="text" name="login_username" id="login_username" autofocus>
                         <label class=loginLabel">Password:</label>
-                        <input type="text" name="login_password" id="login_password">
-                        <input value="Login" type="submit" onclick="login()"  class="btn btn-primary">
+                        <input type="password" name="login_password" id="login_password">
+                        <input value="Login" type="submit" class="btn btn-primary">
                     </form>
+                    
+                    <div id="isloggedin"></div>
                 </div>
+                
+                
                 
 
                 <section id="main"></section>
@@ -144,7 +147,7 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
                 integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
         </script>
-
+        
         <script src="scripts.js"></script>
 
     </body>
