@@ -73,48 +73,44 @@ function printCategories(list) {
     }
     return allCategories.substring(0, allCategories.length - 2);
 }
-var currentDad;
 
+var isLoggedIn = false;
+const urlParams = new URLSearchParams(window.location.search);
+const name = urlParams.get('username');
+const moderator = urlParams.get('moderator');
 
-function CurrentDad(userName, moderator) {
-    this.userName = userName;
-    this.moderator = moderator;
+if (name.length > 0 && moderator.length > 0) {
+    setCurrentUser(name, moderator);
+    isLoggedIn = true;
 }
 
 function setCurrentUser(username, moderator) {
-    currentDad = new CurrentDad(username, moderator);
-    sessionStorage.setItem('username', JSON.stringify(currentDad.userName));
-    sessionStorage.setItem('moderator', JSON.stringify(currentDad.moderator));
+    sessionStorage.setItem('username', JSON.stringify(username));
+    sessionStorage.setItem('moderator', JSON.stringify(moderator));
 }
 
 function logout() {
-    sessionStorage.setItem('username', null);
-    sessionStorage.setItem('moderator', null);
+    sessionStorage.clear();
+    isLoggedIn = false;
     document.getElementById('isloggedin').style.display = "none";
     document.getElementById('logoutbutton').style.display = "none";
     document.getElementById('loginForm').style.display = "block";
+    window.location.search = "";
 }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const name = urlParams.get('username');
-    const moderator = urlParams.get('moderator');
-    setCurrentUser(name, moderator);
+var loggedindiv = document.getElementById('isloggedin');
 
-     // alert(currentDad.userName + " : " + currentDad.moderator);
-     var loggedindiv = document.getElementById('isloggedin');
-
-    if (currentDad.userName !== null) {
-        
-        document.getElementById('loginForm').style.display = "none";
-        loggedindiv.innerHTML = "Welcome <b>" + currentDad.userName + "</b> ";
-        var logoutButton = document.createElement('input');
-        logoutButton.setAttribute('type','button');
-        logoutButton.setAttribute('id','logoutbutton');
-        logoutButton.setAttribute('value','Logout');
-        logoutButton.setAttribute('class','btn btn-primary');
-        logoutButton.setAttribute('onclick','logout()');
-        loggedindiv.appendChild(logoutButton);
-    }
+if (sessionStorage.getItem('username').length > 0) {
+    document.getElementById('loginForm').style.display = "none";
+    loggedindiv.innerHTML = "Welcome <b>" + sessionStorage.getItem('username') + "</b> ";
+    var logoutButton = document.createElement('input');
+    logoutButton.setAttribute('type', 'submit');
+    logoutButton.setAttribute('id', 'logoutbutton');
+    logoutButton.setAttribute('value', 'Logout');
+    logoutButton.setAttribute('class', 'btn btn-primary');
+    logoutButton.setAttribute('onclick', 'logout()');
+    loggedindiv.appendChild(logoutButton);
+}
 
 function getAllDads(url) {
     var request = new XMLHttpRequest();
