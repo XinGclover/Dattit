@@ -1,14 +1,21 @@
-package com.Daddit.app;
+package com;
 
+
+
+import com.Daddit.app.models.Vote;
+import com.Daddit.app.models.Category;
+import com.Daddit.app.models.Dad;
+import com.Daddit.app.models.Post;
+import com.Daddit.app.repositories.DadRepository;
+import com.Daddit.app.repositories.VoteRepository;
+import com.Daddit.app.repositories.CategoryRepository;
+import com.Daddit.app.repositories.PostRepository;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 
 @SpringBootApplication
 public class DadditApplication {
@@ -30,7 +37,6 @@ public class DadditApplication {
             dadRepo.save(dad3);
             dadRepo.save(dad4);
             
-
             Post post1 = new Post("A dad walks into a bar", "My first joke",  dad1);
 
             List<Category> categories = new ArrayList<>();

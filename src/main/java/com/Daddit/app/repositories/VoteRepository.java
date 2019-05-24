@@ -1,6 +1,7 @@
 
-package com.Daddit.app;
+package com.Daddit.app.repositories;
 
+import com.Daddit.app.models.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

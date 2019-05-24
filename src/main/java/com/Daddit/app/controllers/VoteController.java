@@ -1,6 +1,7 @@
+package com.Daddit.app.controllers;
 
-package com.Daddit.app;
-
+import com.Daddit.app.models.Vote;
+import com.Daddit.app.services.VoteService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,13 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/category")
-public class CategoryController {
+@RequestMapping("/vote")
+public class VoteController {
+    
     @Autowired
-    private CategoryService categoryService;
-
+    private VoteService voteService;
+    
     @GetMapping("/getAll")
-    public List<Category> getAllCategories() {
-        return categoryService.findAllCategories();
+    public List<Vote> getAllPosts() {
+        return voteService.findAllVotes();
     }
+
 }

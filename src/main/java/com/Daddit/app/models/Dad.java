@@ -1,4 +1,4 @@
-package com.Daddit.app;
+package com.Daddit.app.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;

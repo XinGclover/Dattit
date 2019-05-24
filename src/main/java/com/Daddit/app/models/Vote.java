@@ -1,4 +1,4 @@
-package com.Daddit.app;
+package com.Daddit.app.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

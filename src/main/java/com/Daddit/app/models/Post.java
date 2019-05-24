@@ -1,4 +1,4 @@
-package com.Daddit.app;
+package com.Daddit.app.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class Post {
     @ManyToMany(cascade = CascadeType.PERSIST)
     private List<Category> categories;
     
-    @OneToMany( cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Vote> votes = new ArrayList();
     
     private LocalDate created;

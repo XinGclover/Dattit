@@ -63,9 +63,9 @@ function countVotes(votes) {
 
 function printCategories(list) {
     var allCategories = "";
-    
+
     for (var i in list) {
-        
+
         if (list[i].name !== undefined) {
             allCategories += "<a href='" + categoryUrl + "/" + list[i].name + "'>" + list[i].name + "</a>, ";
             console.log(list[i].name);
@@ -101,8 +101,22 @@ function getAllDads(url) {
 }
 
 function createNewDadAccount() {
-    var url = 'http://localhost:8080/dad/newDad';
+    var url = 'http://localhost:8080/dad/addDad';
     var formData = JSON.stringify($("#createDadForm").serializeArray());
+    fetch(url, {
+        method: 'POST',
+        body: formData,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+            .then(response => console.log('Success:', JSON.stringify(response)))
+            .catch(error => console.error('Error:', error));
+}
+
+function createNewpost() {
+    var url = 'http://localhost:8080/post/newPost';
+    var formData = JSON.stringify($("#createNewPostForm").serializeArray());
     fetch(url, {
         method: 'POST',
         body: formData,
