@@ -84,24 +84,4 @@ public class PostController {
 
         return new RedirectView("http://localhost:8080");
     }
-
-//    @PostMapping(path = "/newPost")
-//    public ResponseEntity<HttpStatus> newPost(@RequestBody Post post) {
-//        Post newPost = postService.newPost(post);
-//        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newPost.getId()).toUri();
-//        
-//        System.out.println(newPost + " -- " + location.getPath()); 
-//        return ResponseEntity.created(location).build();
-//    }
-//    @PostMapping("/newPost")
-//    public ResponseEntity<HttpStatus> newPost(@RequestBody Post post) {
-//        Post result = postService.newPost(post);
-//        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(result.getId()).toUri();
-//        return ResponseEntity.created(location).build();
-//    }
-//    
-//    @PostMapping("/newPost")
-//    Post newPost(@RequestBody Post post) {
-//        return postService.newPost(post);
-//    }
 }
