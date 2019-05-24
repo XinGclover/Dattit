@@ -116,28 +116,6 @@ function logout() {
         loggedindiv.appendChild(logoutButton);
     }
 
-
-
-//function login() {
-//    const urlParams = new URLSearchParams(window.location.search);
-//    const name = urlParams.get('login_username');
-//    const password = urlParams.get('login_password');
-//    var url = "http://localhost:8080/dad/" + name + "/" + password; 
-//    var request = new XMLHttpRequest();
-//    request.open('GET', url, true);
-//    request.onload = function () {
-//        alert('yay');
-//        if (request.status >= 200 && request.status < 400) {
-//            var data = JSON.parse(request.responseText);
-//            console.log(dada.userName + data.moderator)
-//            setCurrentUser(data.userName, data.moderator);
-//            
-//        } else {
-//            alert('You blew it! Not logged in!');
-//        }
-//    };
-//}
-
 function getAllDads(url) {
     var request = new XMLHttpRequest();
     request.open('GET', url, true);
