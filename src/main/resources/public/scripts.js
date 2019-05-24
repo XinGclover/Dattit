@@ -114,7 +114,7 @@ function createNewDadAccount() {
             .catch(error => console.error('Error:', error));
 }
 
-function createNewpost() {
+function createNewPost() {
     var url = 'http://localhost:8080/post/newPost';
     var formData = JSON.stringify($("#createNewPostForm").serializeArray());
     fetch(url, {

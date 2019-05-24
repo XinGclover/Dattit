@@ -17,7 +17,7 @@ public class DadService {
         return dadRepo.findById(Id);
     }
 
-    public Optional<Dad> findDadByUsernameandPassword(String username, String password) {
+    public Dad findDadByUsernameandPassword(String username, String password) {
         return dadRepo.findByUsernameAndPassword(username, password);
     }
     

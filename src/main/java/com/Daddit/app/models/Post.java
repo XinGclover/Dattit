@@ -34,6 +34,13 @@ public class Post {
     public Post() {
     }
 
+    public Post(String content, String headline, List<Category> categories, Dad dad) {
+        this.content = content;
+        this.headline = headline;
+        this.categories = categories;
+        this.dad = dad;
+        this.created = LocalDate.now();
+    }
     public Post(String content, String headline, Dad dad) {
         this.content = content;
         this.headline = headline;

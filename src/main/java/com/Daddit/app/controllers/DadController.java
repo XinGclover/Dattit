@@ -28,7 +28,7 @@ public class DadController {
     }
     
     @GetMapping("/{name}/{password}")
-    public Optional<Dad> getDad(@PathVariable String name, @PathVariable String password) {
+    public Dad getDad(@PathVariable String name, @PathVariable String password) {
         return dadService.findDadByUsernameandPassword(name, password);
     }
     
