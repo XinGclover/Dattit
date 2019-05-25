@@ -10,7 +10,7 @@ public class DadService {
 
     @Autowired
     private DadRepository dadRepo;
-    
+
     private Dad loginDad;
 
     Optional<Dad> findDadById(long Id) {
@@ -38,18 +38,12 @@ public class DadService {
         }
     }
 
-    public String logInDad(String username, String password) {
-        Optional<Dad> dOptional = dadRepo.findByUsername(username);
-        if (dOptional.isPresent() && dOptional.filter(dad -> dad.getPassword().equals(password)).isPresent()) {
-            loginDad=dOptional.get();
-            if (dOptional.get().isModerator() == false) {               
-                return "user";
-            } else {
-                return "admin";
-            }
+    public Dad logInDad(String username, String password) {
+        Optional<Dad> dOptional = dadRepo.findByUsernameAndPassword(username, password);
+        if (dOptional.isPresent()) {
+            loginDad = dOptional.get();
+            return loginDad;
         }
-        return "Log in fail.";
-
+        return null;
+        }
     }
-
-}
