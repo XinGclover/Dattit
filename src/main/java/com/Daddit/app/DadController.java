@@ -52,10 +52,14 @@ public class DadController {
         return dadService.addDad(newDad);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Dad> getLoginResult(@RequestBody LoginCriteria login) {
+    @PostMapping("/Dadlogin")
+    public ResponseEntity<Dad> getLoginResult(@RequestBody Dad login) {
         Dad logindad = dadService.logInDad(login.getUsername(), login.getPassword());
-
-        return ResponseEntity.ok(logindad);
+        if (logindad != null) {
+            return ResponseEntity.ok(logindad);
+        }
+        else{
+            return ResponseEntity.badRequest().body(logindad);
+        }
     }
 }
