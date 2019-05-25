@@ -139,7 +139,7 @@ $(document).ready(function () {
         var login = {"username": uname, "password": psw};
         $("#login_button").prop("disabled", true);
         $.ajax({
-            url: '/dad/Dadlogin',
+            url: '/dad/login',
             type: 'POST',
             data: JSON.stringify(login),
             contentType: "application/json; charset=utf-8",
