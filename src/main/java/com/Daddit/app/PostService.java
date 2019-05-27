@@ -3,8 +3,10 @@ package com.Daddit.app;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service("postService")
@@ -46,6 +48,18 @@ public class PostService {
         
         
         return null;
+    }
+    
+    public List<Post> findPostsbyString(String str){
+        List<Post> postsbyTitle = findAllPosts().stream().filter(e -> e.getHeadline().
+                toLowerCase().contains(str.toLowerCase())).collect(Collectors.toList());
+        List<Post> postsbyContent = findAllPosts().stream().filter(e -> e.getContent().
+                toLowerCase().contains(str.toLowerCase())).collect(Collectors.toList());
+        List<Post> postsbyDadName = findAllPosts().stream().filter(e -> e.getDad().getUsername().
+                toLowerCase().contains(str.toLowerCase())).collect(Collectors.toList());
+        List<Post> resultList = Stream.of(postsbyTitle, postsbyContent,postsbyDadName).flatMap(x-> x.stream()).
+                collect(Collectors.toList());
+        return resultList;      
     }
 
 }

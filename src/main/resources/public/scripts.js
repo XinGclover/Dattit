@@ -133,7 +133,6 @@ $(function () {
 function userLogin() {
     event.preventDefault();
     var login = {"username": $("#login_username").val(), "password": $("#login_password").val()};
-
     $.ajax({
         url: '/dad/login',
         type: 'POST',
@@ -141,8 +140,29 @@ function userLogin() {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
+            var moderator = Object.values(data)[2];
+            if (moderator == true)
+                console.log("admin");
+            else
+                console.log("dad");
+        },
+        error: function (responseTxt, statusTxt, errorThrown) {
+            console.log(errorThrown);
+        },
+    });
+}
+
+function searchPosts(){
+    event.preventDefault();
+    var searchString = $("#form-control").val();
+    $.ajax({
+        url: '/post/search',
+        type: 'POST',
+        data: {str : searchString},
+        contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+        dataType: "json",
+        success: function (data) {
             console.log(data);
-            return data;
         },
         error: function (responseTxt, statusTxt, errorThrown) {
             console.log(errorThrown);
