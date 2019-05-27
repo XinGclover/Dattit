@@ -68,7 +68,6 @@ function printCategories(list) {
 
         if (list[i].name !== undefined) {
             allCategories += "<a href='" + categoryUrl + "/" + list[i].name + "'>" + list[i].name + "</a>, ";
-            console.log(list[i].name);
         }
     }
     return allCategories.substring(0, allCategories.length - 2);
@@ -128,39 +127,29 @@ $(function () {
 });
 
 
-
-
 function userLogin() {
-    
     var login = {"username": $("#login_username").val(), "password": $("#login_password").val()};
     $.ajax({
-        url: '/dad/login',
+        url: 'http://localhost:8080/dad/login',
         type: 'POST',
         data: JSON.stringify(login),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-            var moderator = Object.values(data)[2];
-//            console.log(data);
+            var moderator = Object.values(data)[2]; 
+            sessionStorage.setItem("id", JSON.stringify(data.id));
             sessionStorage.setItem("username", JSON.stringify(data.username));
             sessionStorage.setItem("moderator", JSON.stringify(data.moderator));
-//            console.log(sessionStorage.getItem("username"));
-//            if (moderator == true) {
+//            if (moderator === 'true') {
 //                console.log("admin")
-//
-//
-//
 //            } else
 //                console.log("dad");
         },
         error: function (responseTxt, statusTxt, errorThrown) {
             console.log(errorThrown);
-        },
+        }
     });
 }
-
-console.log(sessionStorage.getItem("username"));
-
 
 function searchPostsbyString() {
     event.preventDefault();
@@ -174,11 +163,11 @@ function searchPostsbyString() {
         success: function (data) {
 //            emptyForm();
             buildForm(data);
-            console.log(sessionStorage.getItem("username"));
+            
         },
         error: function (responseTxt, statusTxt, errorThrown) {
             console.log(errorThrown);
-        },
+        }
     });
 }
 

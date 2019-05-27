@@ -1,3 +1,6 @@
+#searchGlass:hover {
+    cursor: pointer;
+}
 .sticky-offset {
   top: 100px;
 }
