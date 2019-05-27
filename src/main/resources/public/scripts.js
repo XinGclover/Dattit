@@ -14,6 +14,7 @@ function listPosts(url) {
         if (request.status >= 200 && request.status < 400) {
             var data = JSON.parse(request.responseText);
             var main = document.getElementById("main");
+            main.innerHTML = "";
             for (var post in data) {
 
                 var postItem = document.createElement('div');
@@ -35,6 +36,7 @@ function listPosts(url) {
                             <p class="card-text">` + data[post].content + `
                             </p>
                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                        <button type="button" onclick="deletePost(${data[post].id})" class="btn btn-danger">delete post</button>
                     </div>
                     </div>
                     </div>
@@ -174,6 +176,18 @@ function createFormForPost() {
     } else {
         a.style.display = 'none';
     }
+}
+
+function deletePost(id) {
+    var url = 'http://localhost:8080/post/deletePost';
+    var data = id;
+    fetch(url, {
+        method: 'POST',
+        body: data, 
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(location.reload());
 }
 
 $(function () {

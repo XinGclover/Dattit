@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service("postService")
@@ -50,4 +52,8 @@ public class PostService {
         postRepo.save(post);
         return post;
     }
+    
+    public void deletePostById(Long id) {
+        postRepo.deleteById(id);
+    } 
 }
