@@ -131,7 +131,7 @@ $(function () {
 
 
 function userLogin() {
-    event.preventDefault();
+    
     var login = {"username": $("#login_username").val(), "password": $("#login_password").val()};
     $.ajax({
         url: '/dad/login',
