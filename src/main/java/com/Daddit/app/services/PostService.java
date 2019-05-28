@@ -58,5 +58,9 @@ public class PostService {
                 collect(Collectors.toList());
         return resultList;
     }
+    
+    public void newPost(Post post) {
+        postRepo.save(post);
+    }
 
 }

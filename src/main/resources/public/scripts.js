@@ -9,16 +9,35 @@ listPosts(top10Posts);
 var isLoggedIn = false;
 var loggedindiv = document.getElementById('isloggedin');
 
-if (sessionStorage.getItem('username') !== null) {
-    document.getElementById('loginForm').style.display = "none";
-    loggedindiv.innerHTML = "Welcome <b>" + sessionStorage.getItem('username') + "</b> ";
-    var logoutButton = document.createElement('input');
-    logoutButton.setAttribute('type', 'submit');
-    logoutButton.setAttribute('id', 'logoutbutton');
-    logoutButton.setAttribute('value', 'Logout');
-    logoutButton.setAttribute('class', 'btn btn-primary');
-    logoutButton.setAttribute('onclick', 'logout()');
-    loggedindiv.appendChild(logoutButton);
+function login() {
+    var login = {"username": $("#login_username").val(), "password": $("#login_password").val()};
+    document.getElementById("loginForm").reset();
+    $.ajax({
+        url: 'http://localhost:8080/dad/login',
+        type: 'POST',
+        data: JSON.stringify(login),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            var moderator = Object.values(data)[2];
+            sessionStorage.setItem("id", JSON.stringify(data.id));
+            sessionStorage.setItem("username", JSON.stringify(data.username));
+            sessionStorage.setItem("moderator", JSON.stringify(data.moderator));
+            document.getElementById('loginErrorDiv').innerHTML = "";
+            document.getElementById('loginForm').style.display = "none";
+            loggedindiv.innerHTML = "Welcome <b>" + sessionStorage.getItem('username') + "</b> ";
+            var logoutButton = document.createElement('input');
+            logoutButton.setAttribute('type', 'submit');
+            logoutButton.setAttribute('id', 'logoutbutton');
+            logoutButton.setAttribute('value', 'Logout');
+            logoutButton.setAttribute('class', 'btn btn-primary');
+            logoutButton.setAttribute('onclick', 'logout()');
+            loggedindiv.appendChild(logoutButton);
+        },
+        error: function (responseTxt, statusTxt, errorThrown) {
+            document.getElementById('loginErrorDiv').innerHTML = "<font color='red'>Wrong username and/or password!</font>";
+        }
+    });
 }
 
 function logout() {
@@ -149,29 +168,6 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 });
 
-
-function userLogin() {
-    var login = {"username": $("#login_username").val(), "password": $("#login_password").val()};
-    document.getElementById("loginForm").reset();
-    $.ajax({
-        url: 'http://localhost:8080/dad/login',
-        type: 'POST',
-        data: JSON.stringify(login),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            var moderator = Object.values(data)[2];
-            sessionStorage.setItem("id", JSON.stringify(data.id));
-            sessionStorage.setItem("username", JSON.stringify(data.username));
-            sessionStorage.setItem("moderator", JSON.stringify(data.moderator));
-            document.getElementById('loginErrorDiv').innerHTML = "";
-        },
-        error: function (responseTxt, statusTxt, errorThrown) {
-            document.getElementById('loginErrorDiv').innerHTML = "<font color='red'>Wrong username and/or password!</font>";
-        }
-    });
-}
-
 function searchPostsbyString() {
     event.preventDefault();
     var searchString = $("#form-control").val();
@@ -184,7 +180,7 @@ function searchPostsbyString() {
         success: function (data) {
 //            emptyForm();
             buildForm(data);
-            
+
         },
         error: function (responseTxt, statusTxt, errorThrown) {
             console.log(errorThrown);
