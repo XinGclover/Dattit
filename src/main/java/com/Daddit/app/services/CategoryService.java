@@ -1,6 +1,8 @@
 
-package com.Daddit.app;
+package com.Daddit.app.services;
 
+import com.Daddit.app.repositories.CategoryRepository;
+import com.Daddit.app.models.Category;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +14,11 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepo;
     
-    List<Category> findAllCategories() {
+    public List<Category> findAllCategories() {
         return categoryRepo.findAll();
     }
     
-    Optional<Category> findCategoryById(Long id) {
+    public Optional<Category> findCategoryById(Long id) {
         return categoryRepo.findById(id);
     }
     

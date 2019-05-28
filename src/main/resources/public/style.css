@@ -1,3 +1,6 @@
+#isloggedin, #loginErrorDiv {
+    text-align: center;
+}
 #searchGlass:hover {
     cursor: pointer;
 }

@@ -1,5 +1,13 @@
 package com.Daddit.app;
 
+import com.Daddit.app.repositories.CategoryRepository;
+import com.Daddit.app.repositories.VoteRepository;
+import com.Daddit.app.repositories.PostRepository;
+import com.Daddit.app.repositories.DadRepository;
+import com.Daddit.app.models.Post;
+import com.Daddit.app.models.Dad;
+import com.Daddit.app.models.Vote;
+import com.Daddit.app.models.Category;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

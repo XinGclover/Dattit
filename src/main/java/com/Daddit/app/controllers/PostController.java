@@ -1,5 +1,7 @@
-package com.Daddit.app;
+package com.Daddit.app.controllers;
 
+import com.Daddit.app.services.PostService;
+import com.Daddit.app.models.Post;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
