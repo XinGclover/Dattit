@@ -32,16 +32,37 @@ public class DadditApplication {
             
 
             Post post1 = new Post("A dad walks into a bar", "My first joke",  dad1);
+            Post post2 = new Post("A dad walks out of a shop", "My second joke",  dad2);
+            postRepo.save(post1);
+            postRepo.save(post2);
 
+            List<Post> posts = new ArrayList<>();
+            posts.add(post1);
+            posts.add(post2);
+
+            
             List<Category> categories = new ArrayList<>();
+            List<Category> categories2 = new ArrayList<>();
 
             Category category1 = new Category("r-rated");
             Category category2 = new Category("mild");
             Category category3 = new Category("mom joke");
+            Category category4 = new Category("holiday");
             
             categories.add(category1);
             categories.add(category2);
             categories.add(category3);
+            categories.add(category4);
+            category1.setPosts(posts);
+            category2.setPosts(posts);
+            category3.setPosts(posts);
+            category4.setPosts(posts);
+            
+            categoryRepo.save(category1);
+            categoryRepo.save(category2);
+            categoryRepo.save(category3);
+            categoryRepo.save(category4);
+            
 
             List<Vote> votesList = new ArrayList<>();
 
@@ -54,12 +75,24 @@ public class DadditApplication {
             votesList.add(vote2);
             votesList.add(vote3);
             votesList.add(vote4);
-        
+            
+            List<Vote> votesList2 = new ArrayList<>();
+
+            Vote vote5 = new Vote(1, dad3, post2);
+            Vote vote6 = new Vote(1, dad2, post2);
+           
+
+            votesList2.add(vote5);
+            votesList2.add(vote6);
+//            
+//        
             post1.setCategories(categories);
             post1.setVotes(votesList);
-            postRepo.save(post1);
+            //postRepo.save(post1);
+//            
+            post2.setCategories(categories);
+            post2.setVotes(votesList2);
             
-
             
 
             // CREATE MULITPLE POSTS WITH VOTES

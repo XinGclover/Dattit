@@ -20,7 +20,7 @@ public class PostController {
 
     @Autowired
     private PostService postService;
-
+    
     @GetMapping("/getAll")
     public List<Post> getAllPosts() {
         return postService.findAllPosts();
@@ -51,5 +51,10 @@ public class PostController {
             return ResponseEntity.ok(searchList);
         }
         
+    }
+    
+    @GetMapping("/getAll/{categoryId}")
+    public List<Post> getPostsFromCategory(@PathVariable Long categoryId){
+        return postService.findAllPostInCategory(categoryId);
     }
 }

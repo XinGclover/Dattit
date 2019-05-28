@@ -159,11 +159,11 @@ function userLogin() {
     });
 }
 
-console.log(sessionStorage.getItem("username"));
+
 
 
 function searchPostsbyString() {
-    event.preventDefault();
+//    event.preventDefault(); ta bort annans altid buildForm
     var searchString = $("#form-control").val();
     $.ajax({
         url: '/post/search',
@@ -172,7 +172,7 @@ function searchPostsbyString() {
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         dataType: "json",
         success: function (data) {
-//            emptyForm();
+            emptyForm();
             buildForm(data);
             console.log(sessionStorage.getItem("username"));
         },
