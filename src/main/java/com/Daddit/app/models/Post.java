@@ -1,4 +1,4 @@
-package com.Daddit.app;
+package com.Daddit.app.models;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

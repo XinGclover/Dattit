@@ -5,7 +5,49 @@ var categoryUrl = "http://localhost:8080/post/category/getCategoryByName";
 
 getAllDads(allDadsURL);
 listPosts(top10Posts);
-//            listAllPosts(allPostsURL);
+
+var isLoggedIn = false;
+var loggedindiv = document.getElementById('isloggedin');
+
+function login() {
+    var login = {"username": $("#login_username").val(), "password": $("#login_password").val()};
+    document.getElementById("loginForm").reset();
+    $.ajax({
+        url: 'http://localhost:8080/dad/login',
+        type: 'POST',
+        data: JSON.stringify(login),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            var moderator = Object.values(data)[2];
+            sessionStorage.setItem("id", JSON.stringify(data.id));
+            sessionStorage.setItem("username", JSON.stringify(data.username));
+            sessionStorage.setItem("moderator", JSON.stringify(data.moderator));
+            document.getElementById('loginErrorDiv').innerHTML = "";
+            document.getElementById('loginForm').style.display = "none";
+            loggedindiv.innerHTML = "Welcome <b>" + sessionStorage.getItem('username') + "</b> ";
+            var logoutButton = document.createElement('input');
+            logoutButton.setAttribute('type', 'submit');
+            logoutButton.setAttribute('id', 'logoutbutton');
+            logoutButton.setAttribute('value', 'Logout');
+            logoutButton.setAttribute('class', 'btn btn-primary');
+            logoutButton.setAttribute('onclick', 'logout()');
+            loggedindiv.appendChild(logoutButton);
+        },
+        error: function (responseTxt, statusTxt, errorThrown) {
+            document.getElementById('loginErrorDiv').innerHTML = "<font color='red'>Wrong username and/or password!</font>";
+        }
+    });
+}
+
+function logout() {
+    sessionStorage.clear();
+    isLoggedIn = false;
+    document.getElementById('isloggedin').style.display = "none";
+    document.getElementById('logoutbutton').style.display = "none";
+    document.getElementById('loginForm').style.display = "block";
+    window.location.search = "";
+}
 
 function listPosts(url) {
     var request = new XMLHttpRequest();
@@ -68,7 +110,6 @@ function printCategories(list) {
 
         if (list[i].name !== undefined) {
             allCategories += "<a href='" + categoryUrl + "/" + list[i].name + "'>" + list[i].name + "</a>, ";
-            console.log(list[i].name);
         }
     }
     return allCategories.substring(0, allCategories.length - 2);
@@ -174,11 +215,11 @@ function searchPostsbyString() {
         success: function (data) {
             emptyForm();
             buildForm(data);
-            console.log(sessionStorage.getItem("username"));
+
         },
         error: function (responseTxt, statusTxt, errorThrown) {
             console.log(errorThrown);
-        },
+        }
     });
 }
 
@@ -210,6 +251,10 @@ function buildForm(data) {
                         `;
         main.appendChild(postItem);
     }
+}
+
+function check() {
+    alert(sessionStorage.getItem('username'));
 }
 
 function emptyForm() {

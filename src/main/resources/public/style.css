@@ -1,3 +1,9 @@
+#isloggedin, #loginErrorDiv {
+    text-align: center;
+}
+#searchGlass:hover {
+    cursor: pointer;
+}
 .sticky-offset {
   top: 100px;
 }

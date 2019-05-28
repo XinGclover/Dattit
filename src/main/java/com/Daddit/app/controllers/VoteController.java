@@ -1,5 +1,7 @@
-package com.Daddit.app;
+package com.Daddit.app.controllers;
 
+import com.Daddit.app.services.VoteService;
+import com.Daddit.app.models.Vote;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

@@ -1,5 +1,7 @@
-package com.Daddit.app;
+package com.Daddit.app.controllers;
 
+import com.Daddit.app.services.DadService;
+import com.Daddit.app.models.Dad;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
