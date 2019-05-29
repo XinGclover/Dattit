@@ -7,7 +7,6 @@ import com.Daddit.app.models.Post;
 import com.Daddit.app.repositories.CategoryRepository;
 import com.Daddit.app.services.CategoryService;
 import com.Daddit.app.services.DadService;
-import static com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat.URI;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -95,7 +94,7 @@ public class PostController {
     }
 
     @GetMapping("/getAll/{categoryId}")
-    public List<Post> getPostsFromCategory(@PathVariable Long categoryId) {
-        return postService.findAllPostInCategory(categoryId);
+    public List<Post> getPostsFromCategory(@PathVariable String categoryId) {
+        return postService.findAllPostInCategory(new Long(categoryId));
     }
 }

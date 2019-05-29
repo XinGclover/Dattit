@@ -1,5 +1,7 @@
 package com.Daddit.app.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,9 @@ public class Post {
     private String content;
     private String headline;
     
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "posts")
+    @JsonManagedReference
+
     private List<Category> categories;
     
     @OneToMany( cascade = CascadeType.ALL)

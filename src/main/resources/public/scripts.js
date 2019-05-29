@@ -57,7 +57,6 @@ function listPosts(url) {
             var data = JSON.parse(request.responseText);
             var main = document.getElementById("main");
             for (var post in data) {
-
                 var postItem = document.createElement('div');
                 postItem.setAttribute('class', 'mb-3');
                 postItem.innerHTML = `<div class="row no-gutters">
@@ -109,7 +108,7 @@ function printCategories(list) {
     for (var i in list) {
 
         if (list[i].name !== undefined) {
-            allCategories += "<a href='" + categoryUrl + "/" + list[i].name + "'>" + list[i].name + "</a>, ";
+            allCategories += "<a href='#' onclick = getPostsbyCategory(" + list[i].id + ") >" + list[i].name + "</a>, ";//ta bort categoryUrl + "/" +
         }
     }
     return allCategories.substring(0, allCategories.length - 2);
@@ -170,39 +169,6 @@ $(function () {
 
 
 
-
-function userLogin() {
-    
-    var login = {"username": $("#login_username").val(), "password": $("#login_password").val()};
-    $.ajax({
-        url: '/dad/login',
-        type: 'POST',
-        data: JSON.stringify(login),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (data) {
-            var moderator = Object.values(data)[2];
-//            console.log(data);
-            sessionStorage.setItem("username", JSON.stringify(data.username));
-            sessionStorage.setItem("moderator", JSON.stringify(data.moderator));
-//            console.log(sessionStorage.getItem("username"));
-//            if (moderator == true) {
-//                console.log("admin")
-//
-//
-//
-//            } else
-//                console.log("dad");
-        },
-        error: function (responseTxt, statusTxt, errorThrown) {
-            console.log(errorThrown);
-        },
-    });
-}
-
-
-
-
 function searchPostsbyString() {
 //    event.preventDefault(); ta bort annans altid buildForm
     var searchString = $("#form-control").val();
@@ -218,7 +184,8 @@ function searchPostsbyString() {
 
         },
         error: function (responseTxt, statusTxt, errorThrown) {
-            console.log(errorThrown);
+            emptyForm();
+            $("#main").html("<p>There is 0 result.</p>");
         }
     });
 }
@@ -261,3 +228,22 @@ function emptyForm() {
     var main = document.getElementById("main");
     main.innerHTML = "";
 }
+
+function getPostsbyCategory(sel) {
+    $.ajax({
+        url: '/post/getAll/'+sel,
+        type: 'GET',
+        success: function (data) {
+            console.log(data);
+            emptyForm();
+            buildForm(data);
+
+        },
+        error: function (responseTxt, statusTxt, errorThrown) {
+            emptyForm();
+            $("#main").html("<p>There is 0 result.</p>");
+        }
+    });
+}
+
+

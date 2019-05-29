@@ -49,7 +49,7 @@ public class PostService {
     public List<Post> findAllPostInCategory(Long categoryId) {
         Category c = catservice.findCategoryById(categoryId).get();
         return postRepo.findAll().stream().filter(p -> p.getCategories().contains(c)).collect(Collectors.toList());
-//        return c.getPosts();
+       
     }
 
     public List<Post> findPostsbyString(String str) {

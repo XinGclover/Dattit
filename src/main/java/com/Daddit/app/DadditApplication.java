@@ -40,13 +40,15 @@ public class DadditApplication {
             
 
             Post post1 = new Post("A dad walks into a bar", "My first joke",  dad1);
-//            Post post2 = new Post("A dad walks out of a shop", "My second joke",  dad2);
+            Post post2 = new Post("A dad walks out of a shop", "My second joke",  dad2);
             postRepo.save(post1);
-//            postRepo.save(post2);
+            postRepo.save(post2);
 
             List<Post> posts = new ArrayList<>();
+             List<Post> posts2 = new ArrayList<>();
             posts.add(post1);
-//            posts.add(post2);
+            posts.add(post2);
+            posts2.add(post1);
 
             
             List<Category> categories = new ArrayList<>();
@@ -61,10 +63,12 @@ public class DadditApplication {
             categories.add(category2);
             categories.add(category3);
             categories.add(category4);
-//            category1.setPosts(posts);
-//            category2.setPosts(posts);
-//            category3.setPosts(posts);
-//            category4.setPosts(posts);
+            categories2.add(category4);
+            category1.setPosts(posts2);
+            category2.setPosts(posts2);
+            category3.setPosts(posts2);
+            category4.setPosts(posts);
+            
             
             categoryRepo.save(category1);
             categoryRepo.save(category2);
@@ -86,20 +90,20 @@ public class DadditApplication {
             
             List<Vote> votesList2 = new ArrayList<>();
 
-//            Vote vote5 = new Vote(1, dad3, post2);
-//            Vote vote6 = new Vote(1, dad2, post2);
+            Vote vote5 = new Vote(1, dad3, post2);
+            Vote vote6 = new Vote(1, dad2, post2);
            
 
-//            votesList2.add(vote5);
-//            votesList2.add(vote6);
-////            
+            votesList2.add(vote5);
+            votesList2.add(vote6);
+//            
 //        
             post1.setCategories(categories);
             post1.setVotes(votesList);
-            //postRepo.save(post1);
+         
 //            
-//            post2.setCategories(categories);
-//            post2.setVotes(votesList2);
+            post2.setCategories(categories2);
+            post2.setVotes(votesList2);
             
             
 
