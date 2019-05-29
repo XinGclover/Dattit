@@ -1,16 +1,17 @@
-.loginLabel { width: 60px; }
+.loginLabel { width: 110px; };
+
 .createDadLabel {width: 110px; };
-;
+
 .sticky-offset {
-  top: 100px;
+    top: 100px;
 }
 
 #daddit {
-  max-height: 110px;
+    max-height: 110px;
 }
 
-  
-  .has-search .form-control {
+
+.has-search .form-control {
     padding-left: 2.375rem;
 }
 

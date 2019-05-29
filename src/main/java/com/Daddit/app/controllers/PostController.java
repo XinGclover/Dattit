@@ -66,29 +66,32 @@ public class PostController {
     }
 
     @PostMapping("/newPost")
-    public RedirectView newPost(@RequestParam Map<String, String> body) {
+    public Post newPost(@RequestBody Map<String, String> body) {
+        
         String headline = body.get("headline");
         String content = body.get("content");
         Category category = new Category(body.get("category"));
         List<Category> categories = new ArrayList<>();
         categories.add(category);
-        System.out.println(category);
         // if category does not exist it will be saved in database.
         categoryService.addCategory(category);
 
-        Dad dad = dadService.findDadByUsernameandPassword("daddy1", "daddy");
-        Post newPost = new Post(content, headline, categories, dad);
+//        Dad dad = new Dad("teddy", "bundy");
+        Dad dad = dadService.findDadById(1).get();
+//        Post newPost = new Post(content, headline, categories, dad);
 
-        Post post = postService.newPost(newPost);
+        Post post = postService.newPost(new Post(content, headline, categories, dad));
 
         URI location = ServletUriComponentsBuilder.fromPath("http://localhost:8080").build().toUri();
 
-        return new RedirectView("http://localhost:8080");
+//        return new RedirectView("http://localhost:8080");
+        return post;
     }
     
     @PostMapping("/deletePost")
-    public RedirectView deletePost(@RequestBody Long dadId) {
-        postService.deletePostById(dadId);
-        return new RedirectView("http://localhost:8080");
+    public Post deletePost(@RequestBody Map<String, String> body) {
+        postService.deletePostById(Long.parseLong(body.get("id")));
+        
+        return new Post();
     }
 }

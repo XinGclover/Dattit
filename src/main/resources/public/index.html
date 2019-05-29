@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>daddit</title>
+        <link 
         <link rel="shortcut icon" href="images/Daddit_small_logo.png" type="image/png">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -25,13 +26,13 @@
                 <div  class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-2">
                     <img id="daddit" src="images/Dattit-logo.png" class="img-fluid float-left" style="width: 100%;" alt="Daddit logo">
                 </div>
-                <div class=" col-10 col-sm-4 col-md-6 col-xl-8 my-auto">
+                <div class=" col-9 col-sm-3 col-md-5 col-xl-7 my-auto">
                     <div class="form-group has-search">
                         <span class="fa fa-search form-control-feedback"></span>
                         <input type="text" class="form-control" placeholder="Search">
                     </div>
                 </div>
-                <nav class="col-2 col-sm-2 col-md-2 col-lg-2 navbar navbar-expand-lg navbar-light bg-light ml-auto ">
+                <nav class="col-3 col-sm-3 col-md-3 col-lg-3 navbar navbar-expand-lg navbar-light bg-light ml-auto ">
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
                             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,20 +48,27 @@
                                 <button class="btn" data-toggle="tooltip" data-placement="bottom" title="All"><i
                                         class="fas fa-chart-bar"></i></button>
                             </li>
+                            <li class="nav-item">
+                                <button class="btn btn-outline-primary" data-toggle="modal" data-target="#modalLogin" data-placement="bottom" title="log in" >Log in</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#modalSignUp" title="Sign up">Sign up</button>
+                            </li>
                             <li class="nav-item dropdown dropleft">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-user"></i>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="#">Log in</a>
-                                    <a class="dropdown-item" href="#">Sign up</a>
+                                    <a class="dropdown-item"  data-toggle="modal" data-target="#modalLogin">Log in</a>
+                                    <a class="dropdown-item"  data-toggle="modal" data-target="#modalSignUp">Sign up</a>
                                 </div>
                             </li>
                         </ul>
                     </div>
                 </nav>
             </div>
+
         </header>
 
         <div class="row justify-content-md-center mt-6">
@@ -68,13 +76,12 @@
             <main class="col col-sm-7 pt-4 " >
 
                 <div style="text-align: center">
-                    <form action="http://localhost:8080/dad/login" method="POST" name="loginForm" id="loginForm" style="font-size: 12px;">
-                        <label class="loginLabel">Username:</label>
-                        <input type="text" name="login_username" id="login_username" autofocus>
-                        <label class=loginLabel">Password:</label>
-                        <input type="password" name="login_password" id="login_password">
-                        <input value="Login" type="submit" class="btn btn-primary">
-                    </form>
+<!--                    <form name="loginForm">
+                            <label class="signinLabel">Username:</label>
+                            <input type="text" name="login_username" id="login_username"><br>
+                            <label class="signinLabel">Password:</label>
+                            <input type="password" name="login_password" id="login_password"> <br><br>
+                        </form>-->
 
                     <div id="isloggedin"></div>
                 </div>
@@ -92,21 +99,23 @@
 
             <aside class="col col-sm-3 pt-4">
 
-                <div class="card" >
+                <div class="card" id="newPostCard" >
                     <div class="card-header bg-primary">
                     </div>
                     <div class="card-body">
                         <h5 class="card-title"><img src="images/Daddit_small_logo.png" alt="" style="max-width: 32px;">
-                            daddit</h5>
+                            daddit
+                        </h5>
+                        
                         <p class="card-text">The best dadjokes on the internet.</p>
-                        <a href="javascript: void(0);" class="btn btn-primary" onclick="createFormForPost();">Create Post</a>
+                        <a href="javascript: void(0);" class="btn btn-primary" onclick="createFormForPost()" >Create Post</a>
 
-                        <form id="createNewPostForm" method="POST" action="http://localhost:8080/post/newPost" name="createNewPost" accept-charset="UTF-8" style="display: none; padding-top: 12px;">
-                            <label>Headline</label><br><input type="text" name="headline"><br>
-                            <label>Content </label><textarea style="width: 100%; height: 80px;" name="content"></textarea><br>
-                            <label>Category </label><br><input type="text" name="category"><br><br>
-                            <input type="hidden" name="username" value="">
-                            <input type="submit" value="Submit funny" class="btn btn-primary" onClick=createNewPost();>
+                        <form id="createNewPostForm"  name="createNewPost" accept-charset="UTF-8" style="display: none; padding-top: 12px;">
+                            <label>Headline</label><br><input type="text" name="headline" id="headline"><br>
+                            <label>Content </label><textarea style="width: 100%; height: 80px;" name="content" id="content"></textarea><br>
+                            <label>Category </label><br><input type="text" name="category" id="category"><br><br>
+                            <input type="hidden" name="username" id="postUsername">
+                            <input value="Submit funny"type="button" class="btn btn-primary" onclick="createPost()">
                         </form>
                     </div>
                 </div>
@@ -119,28 +128,65 @@
                     </div>
                 </div>
 
-                <div class="card mt-3" >
-                    <div class="card-header bg-primary"></div>
-                    <div class="card-body">
-                        <h5 class="card-title">Create account</h5>
-                        <form action="http://localhost:8080/dad/addDad" method="POST" name="createDadForm">
-                            <label class="createDadLabel">Username:</label>
-                            <input type="text" name="username" id="username"><br>
-                            <label class="createDadLabel">Password:</label>
-                            <input type="password" name="password" id="password"><br><br>
-                            <input value="Submit" type="submit" onclick="createNewDadAccount()" class="btn btn-primary">
-                        </form>  
-                    </div>
-                </div>
+
 
             </aside>
 
         </div>
         <br>
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-                integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-        </script>
+        <div class="modal fade" id="modalLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalLoginTitle">Log in</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form name="loginForm" id="loginForm">
+                            <label class="signinLabel">Username:</label>
+                            <input type="text" name="login_username" id="login_username"><br>
+                            <label class="signinLabel">Password:</label>
+                            <input type="password" name="login_password" id="login_password"> <br><br>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="userLogin()"class="btn btn-primary">Log in</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="modalSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalRegisterTitle">Register new Dad</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form name="createDadForm" id="createDadForm">
+                            <label class="createDadLabel">Username:</label>
+                            <input type="text" name="username" id="username"><br>
+                            <label class="createDadLabel">Password:</label>
+                            <input type="password" name="password" id="password"><br><br>
+                        </form>  
+
+                    </div>
+                    <div class="modal-footer">
+                        <input value="Submit" type="submit" onclick="createNewDadAccount()" class="btn btn-primary">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
                 integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
         </script>
@@ -151,5 +197,8 @@
         <script src="scripts.js"></script>
 
     </body>
+
+
+
 
 </html>

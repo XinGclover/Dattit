@@ -13,14 +13,14 @@ public class DadService {
     @Autowired
     private DadRepository dadRepo;
 
-   public Optional<Dad> findDadById(long Id) {
+    public Optional<Dad> findDadById(long Id) {
         return dadRepo.findById(Id);
     }
 
-    public Dad findDadByUsernameandPassword(String username, String password) {
+    public Optional<Dad> findDadByUsernameandPassword(String username, String password) {
         return dadRepo.findByUsernameAndPassword(username, password);
     }
-    
+
     public List<Dad> findAllDads() {
         return dadRepo.findAll();
     }
@@ -30,15 +30,20 @@ public class DadService {
         if (!dadRepo.findByUsername(dad.getUsername()).isPresent()) {
             //add a dad
             dadRepo.save(dad);
-            
+
             //return true or false
             return dad;
-        }
-        else {
+        } else {
             return null;
         }
     }
-    
-   
 
+    public Dad logInDad(String username, String password) {
+        Optional<Dad> dOptional = dadRepo.findByUsernameAndPassword(username, password);
+        if (dOptional.isPresent()) {
+            Dad loginDad = dOptional.get();
+            return loginDad;
+        }
+        return null;
+    }
 }

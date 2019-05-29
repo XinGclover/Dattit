@@ -11,7 +11,7 @@ public interface DadRepository extends JpaRepository<Dad, Long>{
     
     public Optional<Dad> findByUsername(String username);
     
-    public Dad findByUsernameAndPassword(String username, String password);
+    public Optional<Dad> findByUsernameAndPassword(String username, String password);
     
     
 }

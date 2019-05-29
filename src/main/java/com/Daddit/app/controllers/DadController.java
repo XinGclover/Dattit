@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,10 +30,10 @@ public class DadController {
         return dadService.findAllDads();
     }
 
-    @GetMapping("/{name}/{password}")
-    public Dad getDad(@PathVariable String name, @PathVariable String password) {
-        return dadService.findDadByUsernameandPassword(name, password);
-    }
+//    @GetMapping("/{name}/{password}")
+//    public Dad getDad(@PathVariable String name, @PathVariable String password) {
+//        return dadService.findDadByUsernameandPassword(name, password);
+//    }
 
 //    @PostMapping("addDad")
 //    public ResponseEntity<HttpStatus> addStudent(@RequestBody Dad dad) {
@@ -40,26 +42,39 @@ public class DadController {
 //        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(result.getId()).toUri();
 //        
 //        return ResponseEntity.created(location).build();
-//    }
+//    }@RequestBody Map<String, String> body
     @PostMapping("/addDad")
-    public Dad newDad(@RequestParam Map<String, String> body) {
-        Dad newDad = new Dad(body.get("username"), body.get("password"));
+    public Dad newDad(@RequestBody Map<String, String> body) {
+        
+        String username = body.get("username");
+        String password = body.get("password");
+        System.out.println(username + password);
+        Dad newDad = new Dad(username, password);
         return dadService.addDad(newDad);
     }
 
-    @PostMapping("/login")
-    public RedirectView newPost(@RequestParam Map<String, String> body, HttpSession session) {
-        
-        String name = body.get("login_username");
-        String password = body.get("login_password");
-        
-        System.out.println(name + password);
-
-        Dad dad = dadService.findDadByUsernameandPassword(name, password);
-        
-        session.setAttribute("user" , dad.getUsername());
-        session.setAttribute("moderator" , dad.isModerator());
-            
-        return new RedirectView("http://localhost:8080/?username=" + name + "&moderator=" + dad.isModerator());
+//   @PostMapping("/login")
+//    public ResponseEntity<Dad> getLoginResult(@RequestBody Map<String, String> login) {
+//        System.out.println(login.get("username"));
+//        Dad logindad = dadService.logInDad(login.get("username"), login.get("password"));
+//        if (logindad != null) {
+//            System.out.println(logindad);
+//            return ResponseEntity.ok(logindad);
+//        }
+//        else{
+//            return ResponseEntity.badRequest().body(logindad);
+//        }
+//    }
+   @PostMapping("/login")
+    public Dad getLoginResult(@RequestBody Map<String, String> login) {
+        System.out.println(login.get("login_username"));
+        Dad logindad = dadService.logInDad(login.get("login_username"), login.get("login_password"));
+        if (logindad != null) {
+            System.out.println(logindad);
+            return logindad;
+        }
+        else{
+            return null;
+        }
     }
 }
