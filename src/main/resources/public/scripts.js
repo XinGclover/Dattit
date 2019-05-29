@@ -7,56 +7,60 @@ getAllDads(allDadsURL);
 listPosts(top10Posts);
 //            listAllPosts(allPostsURL);
 
+function getCurrentUserId() {
+    return sessionStorage.getItem("id");
+}
+
 function listPosts(url) {
-    var request = new XMLHttpRequest();
-    request.open('GET', url, true);
-    var deleteButton = "";
-    request.onload = function () {
-        if (request.status >= 200 && request.status < 400) {
-            var data = JSON.parse(request.responseText);
-            var main = document.getElementById("main");
+   var request = new XMLHttpRequest();
+   request.open('GET', url, true);
+   var deleteButton = "";
+   request.onload = function () {
+       if (request.status >= 200 && request.status < 400) {
+           var data = JSON.parse(request.responseText);
+           var main = document.getElementById("main");
 
-            for (var post in data) {
+           for (var post in data) {
 
-                if (deleteButton === "" && sessionStorage.getItem('moderator') === 'true') {
-                    deleteButton = `<button id='` + data[post].id + `' class='btn btn-warning' onclick="deletePost(${data[post].id})" >DELETE POST (id ==` + data[post].id + ` )</button>`;
-                }
+               if (deleteButton === "" && sessionStorage.getItem('moderator') === 'true') {
+                   deleteButton = `<button id='` + data[post].id + `' class='btn btn-warning' onclick="deletePost(${data[post].id})" >DELETE POST (id ==` + data[post].id +  `)</button>`;
+               }
 
-                var postItem = document.createElement('div');
-                postItem.setAttribute('class', 'mb-3');
-                postItem.innerHTML = `<div class="row no-gutters">
-                       <div class="col-md-1 bg-light text-center">
-                           <a href=""> <i class="fas fa-chevron-up"></i></a> <br>
-                            ` + countVotes(data[post].votes) + ` <br>
-                           <a href=""> <i class="fas fa-chevron-down"></i></a>
-                       </div>
-                       <div class="col-md-11">
-                           <div class="card-body">
-                               <p class="card-header bg-white pt-0">r/`
-                        + printCategories(data[post].categories)
-                        + `• Posted by u/`
-                        + data[post].dad.username + ` `
-                        + data[post].created + `
-                   <h5 class="card-title"> ` + data[post].headline + ` </h5>
-                           <p class="card-text"> ` + data[post].content + ` 
-                           </p>
-                       <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                ` + deleteButton + ` 
-                   </div>
-                   </div>
-                   </div>
-                       `;
-                main.appendChild(postItem);
-            }
-        } else {
-            alert('Some undefined error while reading from the funny dad server!');
-        }
-    };
+               var postItem = document.createElement('div');
+               postItem.setAttribute('class', 'mb-3');
+               postItem.innerHTML = `<div class="row no-gutters">
+                      <div class="col-md-1 bg-light text-center">
+                          <a href="javascript:void(0)" onclick="vote(` + data[post].id + `, ` + getCurrentUserId() + `,`+ 1 + `)"> <i class="fas fa-chevron-up"></i></a> <br>
+                            `+ countVotes(data[post].votes) +`  <br>
+                          <a href="javascript:void(0)" onclick="vote(` + data[post].id + `, ` + getCurrentUserId() + `,`+ -1 + `)"> <i class="fas fa-chevron-down"></i></a>
+                      </div>
+                      <div class="col-md-11">
+                          <div class="card-body">
+                              <p class="card-header bg-white pt-0">r/`
+                       + printCategories(data[post].categories)
+                       + `• Posted by u/`
+                       + data[post].dad.username + ` `
+                       + data[post].created + `
+                  <h5 class="card-title">  `+ data[post].headline +`  </h5>
+                          <p class="card-text">  `+ data[post].content +` 
+                          </p>
+                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                `+ deleteButton +` 
+                  </div>
+                  </div>
+                  </div>
+                      `;
+               main.appendChild(postItem);
+           }
+       } else {
+           alert('Some undefined error while reading from the funny dad server!');
+       }
+   };
 
-    request.onerror = function () {
-        alert('Error connecting to server!');
-    };
-    request.send();
+   request.onerror = function () {
+       alert('Error connecting to server!');
+   };
+   request.send();
 }
 
 function countVotes(votes) {
@@ -178,7 +182,7 @@ function createNewDadAccount() {
 function userLogin() {
 //    event.preventDefault();
 
-    var dad = {};
+//    var dad = {};
 //    var login = {"username": $("#login_username").val(), "password": $("#login_password").val()};
     var url = 'http://localhost:8080/dad/login';
     var formData = JSON.stringify($("#loginForm").map(function () {
@@ -201,9 +205,9 @@ function userLogin() {
                 sessionStorage.setItem("username", response.username);
                 sessionStorage.setItem("moderator", response.moderator);
                 sessionStorage.setItem("id", response.id);
-            })
+            }).then(location.reload())
             .catch(error => console.error('Error:', error));
-    location.reload();
+//    location.reload();
 
 //    sessionStorage.setItem("username", JSON.stringify(data.username));
 //    sessionStorage.setItem("moderator", JSON.stringify(data.moderator));
@@ -236,6 +240,11 @@ function userLogin() {
 //            console.log(errorThrown);
 //        }
 //    });
+}
+
+if (sessionStorage.getItem('username') !== null) {
+   document.getElementById('login_menu').style.display = 'none';
+   document.getElementById('signup_menu').style.display = 'none';
 }
 
 function createPost() {
@@ -366,6 +375,24 @@ function getPostsbyCategory(sel) {
 function emptyForm() {
     var main = document.getElementById("main");
     main.innerHTML = "";
+}
+
+function vote(postId, userId, voteValue) {
+    var data = {"postId": postId, "userId": userId, "voteValue": voteValue};
+    
+    //Get post from db
+    let url = "http://localhost:8080/post/vote";
+    fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+            .then(response => console.log('Success:', JSON.stringify(response)))
+            .catch(error => console.error('Error:', error));
+
+    location.reload();
 }
 
 $(function () {

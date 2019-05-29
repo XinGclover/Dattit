@@ -64,56 +64,6 @@ public class DadditApplication {
             post1.setCategories(categories);
             post1.setVotes(votesList);
             postRepo.save(post1);
-            
-
-            
-
-            // CREATE MULITPLE POSTS WITH VOTES
-
-
-
-            /*
-            Post post1 = new Post("A dad walks into a bar", dad1);
-            Post post2 = new Post("Your mom is so fat when she jumped for joy she got stuck", dad1);
-            
-            List<Category> categoriesForFirstPost = new ArrayList<>();
-            List<Category> categoriesForSecondPost = new ArrayList<>();
-            
-            Category category1 = new Category("r-rated");
-            Category category2 = new Category("mild");
-            Category category3 = new Category("mom joke");
-            
-            categoriesForFirstPost.add(category1);
-            categoriesForFirstPost.add(category2);
-            categoriesForFirstPost.add(category3);
-            
-            categoriesForSecondPost.add(category3);
-            
-            List<Vote> votesForFirstPost = new ArrayList<>();
-            List<Vote> votesForSecondPost = new ArrayList<>();
-            
-            Vote vote1 = new Vote(1, dad3, post1);
-            Vote vote2 = new Vote(1, dad2, post1);
-            votesForFirstPost.add(vote1);
-            votesForFirstPost.add(vote2);
-            
-            Vote vote3 = new Vote(1, dad2, post2);
-            Vote vote4 = new Vote(1, dad3, post2);
-            Vote vote5 = new Vote(1, dad4, post2);
-            votesForSecondPost.add(vote3);
-            votesForSecondPost.add(vote4);
-            votesForSecondPost.add(vote5);
-            
-            post1.setCategories(categoriesForFirstPost);
-            post1.setVotes(votesForFirstPost);
-            
-            post2.setCategories(categoriesForSecondPost);
-            post2.setVotes(votesForSecondPost);
-            
-            postRepo.save(post1);
-            postRepo.save(post2);
-  
-            */
         };
     }
 }

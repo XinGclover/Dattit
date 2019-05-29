@@ -52,7 +52,6 @@ public class PostService {
 //    public List<Post> findAllPostInCategory(String Category) {
 //        return null;
 //    }
-
     public Post newPost(Post post) {
         postRepo.save(post);
         return post;
@@ -60,6 +59,11 @@ public class PostService {
 
     public void deletePostById(Long id) {
         postRepo.deleteById(id);
+    }
+
+    public Post updatePost(Post post) {
+        postRepo.save(post);
+        return post;
     }
 
     public List<Post> findPostsbyString(String str) {
@@ -76,12 +80,12 @@ public class PostService {
 
     public List<Post> findAllPostInCategory(Long categoryId) {
         Category c = catservice.findCategoryById(categoryId).get();
-        
+
         for (Post post : postRepo.findAll().stream().filter(p -> p.getCategories().contains(c)).collect(Collectors.toList())) {
             post.getContent();
         }
-        
-        return  postRepo.findAll().stream().filter(p -> p.getCategories().contains(c)).collect(Collectors.toList()); 
+
+        return postRepo.findAll().stream().filter(p -> p.getCategories().contains(c)).collect(Collectors.toList());
 
     }
 
