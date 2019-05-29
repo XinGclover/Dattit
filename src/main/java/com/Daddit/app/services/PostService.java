@@ -16,11 +16,14 @@ import org.springframework.stereotype.Service;
 @Service("postService")
 public class PostService {
 
-    @Autowired
     private PostRepository postRepo;
+    private CategoryService catservice;
 
     @Autowired
-    private CategoryService catservice;
+    public PostService(PostRepository postRepo, CategoryService catservice) {
+        this.postRepo = postRepo;
+        this.catservice = catservice;
+    }
 
     public List<Post> findAllPosts() {
         return postRepo.findAll();

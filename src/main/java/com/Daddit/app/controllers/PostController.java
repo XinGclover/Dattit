@@ -35,18 +35,21 @@ import org.springframework.web.servlet.view.RedirectView;
 @RestController
 @RequestMapping("/post")
 public class PostController {
-
-    @Autowired
+    
     private PostService postService;
-
-    @Autowired
     private DadService dadService;
-
-    @Autowired
     private CategoryService categoryService;
+    private CategoryRepository categoryRepository;
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    public PostController(PostService postService, DadService dadService, CategoryService categoryService, CategoryRepository categoryRepository) {
+        this.postService = postService;
+        this.dadService = dadService;
+        this.categoryService = categoryService;
+        this.categoryRepository = categoryRepository;
+    }
+    
+    
 
     @GetMapping("/getAll")
     public List<Post> getAllPosts() {
@@ -79,13 +82,14 @@ public class PostController {
         String headline = body.get("headline");
         String content = body.get("content");
         Category category = new Category(body.get("category"));
+        Long id = Long.parseLong(body.get("id"));
         List<Category> categories = new ArrayList<>();
         categories.add(category);
         // if category does not exist it will be saved in database.
         categoryService.addCategory(category);
 
 //        Dad dad = new Dad("teddy", "bundy");
-        Dad dad = dadService.findDadById(1).get();
+        Dad dad = dadService.findDadById(id).get();
 //        Post newPost = new Post(content, headline, categories, dad);
 
         Post post = postService.newPost(new Post(content, headline, categories, dad));

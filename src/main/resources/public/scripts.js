@@ -86,16 +86,7 @@ function printCategories(list) {
 
 
 
-//var isLoggedIn = false;
-//const urlParams = new URLSearchParams(window.location.search);
-//const name = urlParams.get('username');
-//const moderator = urlParams.get('moderator');
-//
-//if (name.length > 0 && moderator.length > 0) {
-//    setCurrentUser(name, moderator);
-//    isLoggedIn = true;
-//}
-//
+
 function setCurrentUser(username, moderator) {
     sessionStorage.setItem('username', username);
     sessionStorage.setItem('moderator', moderator);
@@ -155,10 +146,6 @@ function getAllDads(url) {
 function createNewDadAccount() {
     var url = 'http://localhost:8080/dad/addDad';
 
-
-
-//    var formData = JSON.stringify($("#createDadForm").serializeArray());
-
     var formData = JSON.stringify($("#createDadForm").map(function () {
         return $(this).find('*').serializeArray()
                 .reduce((a, x) => ({...a, [x.name]: x.value}), {});
@@ -180,10 +167,7 @@ function createNewDadAccount() {
 }
 
 function userLogin() {
-//    event.preventDefault();
 
-//    var dad = {};
-//    var login = {"username": $("#login_username").val(), "password": $("#login_password").val()};
     var url = 'http://localhost:8080/dad/login';
     var formData = JSON.stringify($("#loginForm").map(function () {
         return $(this).find('*').serializeArray()
@@ -202,44 +186,13 @@ function userLogin() {
         }
     }).then(res => res.json())
             .then(function (response) {
+                console.log(response);
                 sessionStorage.setItem("username", response.username);
                 sessionStorage.setItem("moderator", response.moderator);
                 sessionStorage.setItem("id", response.id);
             }).then(location.reload())
-            .catch(error => console.error('Error:', error));
-//    location.reload();
+                    .catch(error => console.error('Error:', error));
 
-//    sessionStorage.setItem("username", JSON.stringify(data.username));
-//    sessionStorage.setItem("moderator", JSON.stringify(data.moderator));
-//    sessionStorage.setItem("dadId", JSON.stringify(data.id));
-//    location.reload();
-//    $.ajax({
-//
-//        url: 'http://localhost:8080/dad/login',
-//        type: 'POST',
-//        data: JSON.stringify(login),
-//        contentType: "application/json; charset=utf-8",
-//        dataType: "json",
-//        success: function (data) {
-//            var moderator = Object.values(data)[2];
-//            console.log(data);
-//            sessionStorage.setItem("username", JSON.stringify(data.username));
-//            sessionStorage.setItem("moderator", JSON.stringify(data.moderator));
-//            sessionStorage.setItem("dadId", JSON.stringify(data.id));
-//
-//            console.log(sessionStorage.getItem('username'));
-////            if (moderator == true) {
-////                console.log("admin")
-////
-////
-////
-////            } else
-////                console.log("dad");
-//        },
-//        error: function (responseTxt, statusTxt, errorThrown) {
-//            console.log(errorThrown);
-//        }
-//    });
 }
 
 if (sessionStorage.getItem('username') !== null) {
@@ -266,7 +219,7 @@ function createPost() {
     }).then(res => res.json())
             .then(response => console.log('Success:', JSON.stringify(response)))
             .catch(error => console.error('Error:', error));
-    location.reload();
+    location.reload();    
 
 
 }
@@ -279,8 +232,10 @@ function createFormForPost() {
         var a = document.getElementById('createNewPostForm');
         if (a.style.display === 'none') {
             a.style.display = "block";
+            document.getElementById("postUserID").value = sessionStorage.getItem("id");
         } else {
             a.style.display = 'none';
+            document.getElementById("postUserID").value = sessionStorage.getItem("id");
         }
     }
 }
@@ -303,7 +258,7 @@ function deletePost(id) {
 }
 
 function searchPostsbyString() {
-//    event.preventDefault();
+
     var searchString = $("#form-control").val();
     
     $.ajax({
@@ -324,6 +279,15 @@ function searchPostsbyString() {
         }
     });
 }
+
+var x = document.getElementById("form-control");
+
+x.addEventListener("keyup", function(event) {
+    if (event.keyCode===13) {
+        searchPostsbyString();
+        
+    }
+});
 
 function buildForm(data) {
     var main = document.getElementById("main");

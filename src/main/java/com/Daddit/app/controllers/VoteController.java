@@ -14,8 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/vote")
 public class VoteController {
     
-    @Autowired
     private VoteService voteService;
+
+    @Autowired
+    public VoteController(VoteService voteService) {
+        this.voteService = voteService;
+    }
     
     @GetMapping("/getAll")
     public List<Vote> getAllPosts() {

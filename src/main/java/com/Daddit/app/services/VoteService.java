@@ -10,8 +10,13 @@ import org.springframework.stereotype.Service;
 @Service("voteService")
 public class VoteService {
 
-    @Autowired
     private VoteRepository voteRepo;
+
+    @Autowired
+    public VoteService(VoteRepository voteRepo) {
+        this.voteRepo = voteRepo;
+    }
+    
     
     public List<Vote> findAllVotes() {
         return voteRepo.findAll();

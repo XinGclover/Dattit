@@ -10,8 +10,12 @@ import org.springframework.stereotype.Service;
 @Service("dadService")
 public class DadService {
 
-    @Autowired
     private DadRepository dadRepo;
+
+    @Autowired
+    public DadService(DadRepository dadRepo) {
+        this.dadRepo = dadRepo;
+    }
 
     public Optional<Dad> findDadById(long Id) {
         return dadRepo.findById(Id);
