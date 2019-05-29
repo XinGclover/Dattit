@@ -74,8 +74,7 @@ function printCategories(list) {
     for (var i in list) {
 
         if (list[i].name !== undefined) {
-            allCategories += "<a href='" + categoryUrl + "/" + list[i].name + "'>" + list[i].name + "</a>, ";
-            console.log(list[i].name);
+            allCategories += "<a href='#' onclick = getPostsbyCategory(" + list[i].id + ") >" + list[i].name + "</a>, ";
         }
     }
     return allCategories.substring(0, allCategories.length - 2);
@@ -109,7 +108,7 @@ function logout() {
 
 var loggedindiv = document.getElementById('isloggedin');
 
-if (sessionStorage.getItem('username').length > 0) {
+if (sessionStorage.getItem('username') !== null) {
     document.getElementById('loginForm').style.display = "none";
     loggedindiv.innerHTML = "Welcome <b>" + sessionStorage.getItem('username') + "</b> ";
     var logoutButton = document.createElement('input');
@@ -163,7 +162,6 @@ function createNewDadAccount() {
 
     var data = formData.substring(1, formData.length - 1);
 
-    console.log(data);
 
     fetch(url, {
         method: 'POST',
@@ -190,7 +188,7 @@ function userLogin() {
 
     var data = formData.substring(1, formData.length - 1);
 
-    console.log(data);
+    
 
     fetch(url, {
         method: 'POST',
@@ -280,9 +278,9 @@ function createFormForPost() {
 
 function deletePost(id) {
     var url = 'http://localhost:8080/post/deletePost';
-    var data = JSON.stringify({ "id": id});
-    console.log(data);
+    var data = JSON.stringify({"id": id});
     
+
     fetch(url, {
         method: 'POST',
         body: data,
@@ -296,8 +294,9 @@ function deletePost(id) {
 }
 
 function searchPostsbyString() {
-    event.preventDefault();
+//    event.preventDefault();
     var searchString = $("#form-control").val();
+    
     $.ajax({
         url: '/post/search',
         type: 'POST',
@@ -305,11 +304,13 @@ function searchPostsbyString() {
         contentType: "application/x-www-form-urlencoded; charset=UTF-8",
         dataType: "json",
         success: function (data) {
-//            emptyForm();
+            emptyForm();
             buildForm(data);
-            console.log(sessionStorage.getItem("username"));
+            
         },
         error: function (responseTxt, statusTxt, errorThrown) {
+            emptyForm();
+
             console.log(errorThrown);
         }
     });
@@ -345,6 +346,23 @@ function buildForm(data) {
     }
 }
 
+function getPostsbyCategory(sel) {
+   $.ajax({
+       url: '/post/getAll/'+sel,
+       type: 'GET',
+       success: function (data) {
+           
+           emptyForm();
+           buildForm(data);
+
+       },
+       error: function (responseTxt, statusTxt, errorThrown) {
+           emptyForm();
+           $("#main").html("<p>There is 0 result.</p>");
+       }
+   });
+}
+
 function emptyForm() {
     var main = document.getElementById("main");
     main.innerHTML = "";
@@ -353,4 +371,4 @@ function emptyForm() {
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 }
-);
+);    

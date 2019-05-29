@@ -67,7 +67,7 @@ public class PostController {
 
     @PostMapping("/newPost")
     public Post newPost(@RequestBody Map<String, String> body) {
-        
+
         String headline = body.get("headline");
         String content = body.get("content");
         Category category = new Category(body.get("category"));
@@ -87,11 +87,26 @@ public class PostController {
 //        return new RedirectView("http://localhost:8080");
         return post;
     }
-    
+
     @PostMapping("/deletePost")
     public Post deletePost(@RequestBody Map<String, String> body) {
         postService.deletePostById(Long.parseLong(body.get("id")));
-        
+
         return new Post();
     }
+
+    @PostMapping("/search")
+    public ResponseEntity<List<Post>> getSearchPosts(@RequestParam String str) {
+        List<Post> searchList = postService.findPostsbyString(str);
+        if (searchList.isEmpty()) {
+            return ResponseEntity.badRequest().body(searchList);
+        } else {
+            return ResponseEntity.ok(searchList);
+        }
+    }
+    
+    @GetMapping("/getAll/{categoryId}")
+   public List<Post> getPostsFromCategory(@PathVariable String categoryId) {
+       return postService.findAllPostInCategory(new Long(categoryId));
+   }
 }

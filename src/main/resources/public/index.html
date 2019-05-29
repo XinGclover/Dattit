@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>daddit</title>
         <link 
-        <link rel="shortcut icon" href="images/Daddit_small_logo.png" type="image/png">
+            <link rel="shortcut icon" href="images/Daddit_small_logo.png" type="image/png">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -27,9 +27,10 @@
                     <img id="daddit" src="images/Dattit-logo.png" class="img-fluid float-left" style="width: 100%;" alt="Daddit logo">
                 </div>
                 <div class=" col-9 col-sm-3 col-md-5 col-xl-7 my-auto">
+
                     <div class="form-group has-search">
-                        <span class="fa fa-search form-control-feedback"></span>
-                        <input type="text" class="form-control" placeholder="Search">
+                        <label class="fa fa-search" id="searchGlass"  onclick="searchPostsbyString()"></label>
+                        <input type="text" class="" id="form-control" placeholder="Search" style="width: 90%; padding: 5px 0px 5px 20px">
                     </div>
                 </div>
                 <nav class="col-3 col-sm-3 col-md-3 col-lg-3 navbar navbar-expand-lg navbar-light bg-light ml-auto ">
@@ -76,12 +77,12 @@
             <main class="col col-sm-7 pt-4 " >
 
                 <div style="text-align: center">
-<!--                    <form name="loginForm">
-                            <label class="signinLabel">Username:</label>
-                            <input type="text" name="login_username" id="login_username"><br>
-                            <label class="signinLabel">Password:</label>
-                            <input type="password" name="login_password" id="login_password"> <br><br>
-                        </form>-->
+                    <!--                    <form name="loginForm">
+                                                <label class="signinLabel">Username:</label>
+                                                <input type="text" name="login_username" id="login_username"><br>
+                                                <label class="signinLabel">Password:</label>
+                                                <input type="password" name="login_password" id="login_password"> <br><br>
+                                            </form>-->
 
                     <div id="isloggedin"></div>
                 </div>
@@ -106,7 +107,7 @@
                         <h5 class="card-title"><img src="images/Daddit_small_logo.png" alt="" style="max-width: 32px;">
                             daddit
                         </h5>
-                        
+
                         <p class="card-text">The best dadjokes on the internet.</p>
                         <a href="javascript: void(0);" class="btn btn-primary" onclick="createFormForPost()" >Create Post</a>
 
@@ -197,8 +198,5 @@
         <script src="scripts.js"></script>
 
     </body>
-
-
-
 
 </html>

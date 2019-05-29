@@ -1,10 +1,12 @@
 package com.Daddit.app.services;
 
+import com.Daddit.app.models.Category;
 import com.Daddit.app.models.Post;
 import com.Daddit.app.repositories.PostRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
@@ -16,6 +18,9 @@ public class PostService {
 
     @Autowired
     private PostRepository postRepo;
+
+    @Autowired
+    private CategoryService catservice;
 
     public List<Post> findAllPosts() {
         return postRepo.findAll();
@@ -44,9 +49,9 @@ public class PostService {
         return postRepo.findByOrderByCreatedDesc();
     }
 
-    public List<Post> findAllPostInCategory(String Category) {
-        return null;
-    }
+//    public List<Post> findAllPostInCategory(String Category) {
+//        return null;
+//    }
 
     public Post newPost(Post post) {
         postRepo.save(post);
@@ -56,4 +61,28 @@ public class PostService {
     public void deletePostById(Long id) {
         postRepo.deleteById(id);
     }
+
+    public List<Post> findPostsbyString(String str) {
+        List<Post> postsbyTitle = findAllPosts().stream().filter(e -> e.getHeadline().
+                toLowerCase().contains(str.toLowerCase())).collect(Collectors.toList());
+        List<Post> postsbyContent = findAllPosts().stream().filter(e -> e.getContent().
+                toLowerCase().contains(str.toLowerCase())).collect(Collectors.toList());
+        List<Post> postsbyDadName = findAllPosts().stream().filter(e -> e.getDad().getUsername().
+                toLowerCase().contains(str.toLowerCase())).collect(Collectors.toList());
+        List<Post> resultList = Stream.of(postsbyTitle, postsbyContent, postsbyDadName).flatMap(x -> x.stream()).
+                collect(Collectors.toList());
+        return resultList;
+    }
+
+    public List<Post> findAllPostInCategory(Long categoryId) {
+        Category c = catservice.findCategoryById(categoryId).get();
+        
+        for (Post post : postRepo.findAll().stream().filter(p -> p.getCategories().contains(c)).collect(Collectors.toList())) {
+            post.getContent();
+        }
+        
+        return  postRepo.findAll().stream().filter(p -> p.getCategories().contains(c)).collect(Collectors.toList()); 
+
+    }
+
 }
