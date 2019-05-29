@@ -56,4 +56,9 @@ public class PostService {
     public void deletePostById(Long id) {
         postRepo.deleteById(id);
     }
+    
+    public Post updatePost(Post post) {
+        postRepo.save(post);
+        return post;
+    }
 }
