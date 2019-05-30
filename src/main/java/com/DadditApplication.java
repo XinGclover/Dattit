@@ -47,6 +47,8 @@ public class DadditApplication {
             dadRepo.save(dad4);
 
             Post post1 = new Post("A dad walks into a bar", "My first joke", dad1);
+            List<Post> posts= new ArrayList<>();
+            posts.add(post1);
 
             List<Category> categories = new ArrayList<>();
 
@@ -57,6 +59,14 @@ public class DadditApplication {
             categories.add(category1);
             categories.add(category2);
             categories.add(category3);
+            
+            category1.setPosts(posts);
+            category2.setPosts(posts);
+            category3.setPosts(posts);
+            categoryRepo.save(category1);
+            categoryRepo.save(category2);
+            categoryRepo.save(category3);
+            
 
             List<Vote> votesList = new ArrayList<>();
 

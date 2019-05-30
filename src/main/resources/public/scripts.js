@@ -270,6 +270,7 @@ function searchPostsbyString() {
         success: function (data) {
             emptyForm();
             buildForm(data);
+           
             
         },
         error: function (responseTxt, statusTxt, errorThrown) {
