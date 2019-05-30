@@ -60,7 +60,7 @@ public class PostController {
     public List<Post> getPostsFromDad(@PathVariable Long dadId) {
         return postService.findPostsFromDad(dadId);
     }
-    
+
     @GetMapping("/postid/{id}")
     public Post getPostById(@PathVariable Long id) {
         return postService.findPostById(id).get();
@@ -106,16 +106,16 @@ public class PostController {
 
         return new Post();
     }
-    
+
     @PostMapping("/vote")
     public Post updatePost(@RequestBody Map<String, Long> data) {
-        
+
         Post post = postService.findPostById(data.get("postId")).get();
-        
+
         Dad dad = dadService.findDadById(data.get("userId")).get();
-                
+
         Vote vote = new Vote(data.get("voteValue").intValue(), dad, post);
-        
+
         post.getVotes().add(vote);
         return postService.updatePost(post);
     }

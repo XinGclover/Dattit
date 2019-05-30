@@ -3,6 +3,7 @@ package com.Daddit.app.services;
 import com.Daddit.app.models.Category;
 import com.Daddit.app.models.Post;
 import com.Daddit.app.repositories.PostRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -70,15 +71,19 @@ public class PostService {
     }
 
     public List<Post> findPostsbyString(String str) {
-        List<Post> postsbyTitle = findAllPosts().stream().filter(e -> e.getHeadline().
-                toLowerCase().contains(str.toLowerCase())).collect(Collectors.toList());
-        List<Post> postsbyContent = findAllPosts().stream().filter(e -> e.getContent().
-                toLowerCase().contains(str.toLowerCase())).collect(Collectors.toList());
-        List<Post> postsbyDadName = findAllPosts().stream().filter(e -> e.getDad().getUsername().
-                toLowerCase().contains(str.toLowerCase())).collect(Collectors.toList());
-        List<Post> resultList = Stream.of(postsbyTitle, postsbyContent, postsbyDadName).flatMap(x -> x.stream()).
-                collect(Collectors.toList());
-        return resultList;
+        if (str.equals("")) {
+            return findAllPosts();
+        } else {
+            List<Post> postsbyTitle = findAllPosts().stream().filter(e -> e.getHeadline().
+                    toLowerCase().contains(str.toLowerCase())).collect(Collectors.toList());
+            List<Post> postsbyContent = findAllPosts().stream().filter(e -> e.getContent().
+                    toLowerCase().contains(str.toLowerCase())).collect(Collectors.toList());
+            List<Post> postsbyDadName = findAllPosts().stream().filter(e -> e.getDad().getUsername().
+                    toLowerCase().contains(str.toLowerCase())).collect(Collectors.toList());
+            List<Post> resultList = new ArrayList(Stream.of(postsbyTitle, postsbyContent, postsbyDadName).flatMap(x -> x.stream()).
+                    collect(Collectors.toSet()));
+            return resultList;
+        }
     }
 
     public List<Post> findAllPostInCategory(Long categoryId) {
