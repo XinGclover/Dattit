@@ -25,14 +25,18 @@ public class CategoryService {
         return categoryRepo.findById(id);
     }
 
+//    public Category addCategory(Category category) {
+//
+//        if (!categoryRepo.findByname(category.getName()).isPresent()) {
+//            categoryRepo.save(category);
+//            return category;
+//        } else {
+//            return category;
+//        }
+//    }
     public Category addCategory(Category category) {
-
-        if (!categoryRepo.findByname(category.getName()).isPresent()) {
-            categoryRepo.save(category);
-            return category;
-        } else {
-            return null;
-        }
+        categoryRepo.save(category);
+        return category;
     }
-
+    
 }
