@@ -9,9 +9,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service("postService")
@@ -45,7 +42,6 @@ public class PostService {
                 .compareTo(o1.getVotes().stream()
                         .reduce(0, (partialsum, vote) -> partialsum + vote.getVote(), Integer::sum)))
                 .limit(10).collect(Collectors.toList());
-
         return sortedPosts;
     }
 
