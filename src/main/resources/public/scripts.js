@@ -4,6 +4,7 @@ var top10Posts = "http://localhost:8080/post/getTop10";
 getAllDads(allDadsURL);
 listPosts(top10Posts);
 
+
 function E(id) {
     return document.getElementById(id);
 }
@@ -23,7 +24,7 @@ function listPosts(url) {
         if (request.status >= 200 && request.status < 400) {
             var data = JSON.parse(request.responseText);
             var main = E("main");
-
+            main.innerHTML = "";
             for (var post in data) {
                 if (deleteButton === "" && user.moderator === true) {
                     deleteButton = `<button id='` + data[post].id + `' class='btn btn-warning' onclick="deletePost(${data[post].id})" >DELETE POST (id ==` + data[post].id + `)</button>`;
@@ -122,7 +123,7 @@ function getAllDads(url) {
             allDads.style.listStyle = 'none';
             for (var dad in data) {
                 var newItem = document.createElement('li');
-                newItem.innerHTML = "<a href='http://localhost:8080/post/" + data[dad].id + " '> " + data[dad].username + "</a>";
+                newItem.innerHTML = "<a href='javascript: void(0);' onclick=\"listPosts('http://localhost:8080/post/" + data[dad].id + "')\"> " + data[dad].username + "</a>";
                 allDads.appendChild(newItem);
             }
         } else {
