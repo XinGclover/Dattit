@@ -1,8 +1,7 @@
 var allDadsURL = "http://localhost:8080/dad/getAll";
 var top10Posts = "http://localhost:8080/post/getTop10";
-
+var allPosts = "http://localhost:8080/post/getAll";
 getAllDads(allDadsURL);
-listPosts(top10Posts);
 
 
 function E(id) {
@@ -11,10 +10,16 @@ function E(id) {
 
 var isModeratorTrueOrFalse = (sessionStorage.getItem('moderator') === 'true');
 var user = {
-    id : sessionStorage.getItem('id'),
-    username : sessionStorage.getItem('username'),
-    moderator : isModeratorTrueOrFalse
+    id: sessionStorage.getItem('id'),
+    username: sessionStorage.getItem('username'),
+    moderator: isModeratorTrueOrFalse
 };
+
+if (user.id !== null) {
+    listPosts('http://localhost:8080/post/' + user.id);
+} else {
+    listPosts(top10Posts);
+}
 
 function listPosts(url) {
     var request = new XMLHttpRequest();
@@ -171,14 +176,13 @@ function userLogin() {
 
     var data = formData.substring(1, formData.length - 1);
 
-    
     fetch(url, {
         method: 'POST',
         body: data,
         headers: {
             'Content-Type': 'application/json'
         }
-        
+
     }).then(res => res.json())
             .then(function (response) {
                 E('isloggedin').innerHTML = "";
@@ -194,9 +198,9 @@ function loginError() {
 }
 
 if (user.username !== null) {
-   E('login_menu').style.display = 'none';
-   E('signup_menu').style.display = 'none';
-  
+    E('login_menu').style.display = 'none';
+    E('signup_menu').style.display = 'none';
+
 }
 
 function createPost() {
@@ -207,7 +211,7 @@ function createPost() {
     }).get());
 
     var data = formData.substring(1, formData.length - 1);
-    
+
     fetch(url, {
         method: 'POST',
         body: data,
@@ -217,7 +221,7 @@ function createPost() {
     }).then(res => res.json())
             .then(response => console.log('Success:', JSON.stringify(response)))
             .catch(error => console.error('Error:', error));
-     location.reload();
+    location.reload();
 }
 
 
@@ -240,7 +244,7 @@ function deletePost(id) {
     var url = 'http://localhost:8080/post/deletePost';
     var data = JSON.stringify({"id": id});
 
-    
+
     fetch(url, {
         method: 'POST',
         body: data,
@@ -256,7 +260,7 @@ function deletePost(id) {
 function searchPostsbyString() {
 
     var searchString = $("#form-control").val();
-    
+
     $.ajax({
         url: '/post/search',
         type: 'POST',
@@ -266,22 +270,22 @@ function searchPostsbyString() {
         success: function (data) {
             emptyForm();
             buildForm(data);
-            
+
         },
         error: function (responseTxt, statusTxt, errorThrown) {
             emptyForm();
             $("#main").html("<p>There is 0 result.</p>");
-            
+
         }
     });
 }
 
 var searchForm = E("form-control");
 
-searchForm.addEventListener("keyup", function(event) {
-    if (event.keyCode===13) {
+searchForm.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
         searchPostsbyString();
-        
+
     }
 });
 
@@ -316,20 +320,20 @@ function buildForm(data) {
 }
 
 function getPostsbyCategory(sel) {
-   $.ajax({
-       url: '/post/getAll/'+sel,
-       type: 'GET',
-       success: function (data) {
-           
-           emptyForm();
-           buildForm(data);
+    $.ajax({
+        url: '/post/getAll/' + sel,
+        type: 'GET',
+        success: function (data) {
 
-       },
-       error: function (responseTxt, statusTxt, errorThrown) {
-           emptyForm();
-           $("#main").html("<p>There is 0 result.</p>");
-       }
-   });
+            emptyForm();
+            buildForm(data);
+
+        },
+        error: function (responseTxt, statusTxt, errorThrown) {
+            emptyForm();
+            $("#main").html("<p>There is 0 result.</p>");
+        }
+    });
 }
 
 function emptyForm() {
