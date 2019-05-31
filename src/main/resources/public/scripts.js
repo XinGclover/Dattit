@@ -1,14 +1,24 @@
 var allDadsURL = "http://localhost:8080/dad/getAll";
-var allPostsURL = "http://localhost:8080/post/getAll";
 var top10Posts = "http://localhost:8080/post/getTop10";
-var categoryUrl = "http://localhost:8080/post/category/getCategoryByName";
-
+var allPosts = "http://localhost:8080/post/getAll";
 getAllDads(allDadsURL);
-listPosts(top10Posts);
-//            listAllPosts(allPostsURL);
 
-function getCurrentUserId() {
-    return sessionStorage.getItem("id");
+
+function E(id) {
+    return document.getElementById(id);
+}
+
+var isModeratorTrueOrFalse = (sessionStorage.getItem('moderator') === 'true');
+var user = {
+    id: sessionStorage.getItem('id'),
+    username: sessionStorage.getItem('username'),
+    moderator: isModeratorTrueOrFalse
+};
+
+if (user.id !== null) {
+    listPosts('http://localhost:8080/post/' + user.id);
+} else {
+    listPosts(top10Posts);
 }
 
 function listPosts(url) {
@@ -18,11 +28,10 @@ function listPosts(url) {
     request.onload = function () {
         if (request.status >= 200 && request.status < 400) {
             var data = JSON.parse(request.responseText);
-            var main = document.getElementById("main");
-
+            var main = E("main");
+            main.innerHTML = "";
             for (var post in data) {
-
-                if (deleteButton === "" && sessionStorage.getItem('moderator') === 'true') {
+                if (deleteButton === "" && user.moderator === true) {
                     deleteButton = `<button id='` + data[post].id + `' class='btn btn-warning' onclick="deletePost(${data[post].id})" >DELETE POST (id ==` + data[post].id + `)</button>`;
                 }
 
@@ -30,9 +39,9 @@ function listPosts(url) {
                 postItem.setAttribute('class', 'mb-3');
                 postItem.innerHTML = `<div class="row no-gutters">
                       <div class="col-md-1 bg-light text-center">
-                          <a href="javascript:void(0)" onclick="vote(` + data[post].id + `, ` + getCurrentUserId() + `,` + 1 + `)"> <i class="fas fa-chevron-up"></i></a> <br>
+                          <a href="javascript:void(0)" onclick="vote(` + data[post].id + `, ` + user.id + `,` + 1 + `)"> <i class="fas fa-chevron-up"></i></a> <br>
                             ` + countVotes(data[post].votes) + `  <br>
-                          <a href="javascript:void(0)" onclick="vote(` + data[post].id + `, ` + getCurrentUserId() + `,` + -1 + `)"> <i class="fas fa-chevron-down"></i></a>
+                          <a href="javascript:void(0)" onclick="vote(` + data[post].id + `, ` + user.id + `,` + -1 + `)"> <i class="fas fa-chevron-down"></i></a>
                       </div>
                       <div class="col-md-11">
                           <div class="card-body">
@@ -84,28 +93,19 @@ function printCategories(list) {
     return allCategories.substring(0, allCategories.length - 2);
 }
 
-
-
-
-function setCurrentUser(username, moderator) {
-    sessionStorage.setItem('username', username);
-    sessionStorage.setItem('moderator', moderator);
-}
-
 function logout() {
     sessionStorage.clear();
-    isLoggedIn = false;
-    document.getElementById('isloggedin').style.display = "none";
-    document.getElementById('logoutbutton').style.display = "none";
-    document.getElementById('loginForm').style.display = "block";
-    window.location.search = "";
+    E('isloggedin').style.display = "none";
+    E('logoutbutton').style.display = "none";
+    E('loginForm').style.display = "block";
+    location.reload();
 }
 
-var loggedindiv = document.getElementById('isloggedin');
+var loggedindiv = E('isloggedin');
 
-if (sessionStorage.getItem('username') !== null) {
-    document.getElementById('loginForm').style.display = "none";
-    loggedindiv.innerHTML = "Welcome <b>" + sessionStorage.getItem('username') + "</b> ";
+if (user.username !== null) {
+    E('loginForm').style.display = "none";
+    loggedindiv.innerHTML = "Welcome <b>" + user.username + "</b> ";
     var logoutButton = document.createElement('input');
     logoutButton.setAttribute('type', 'submit');
     logoutButton.setAttribute('id', 'logoutbutton');
@@ -122,13 +122,13 @@ function getAllDads(url) {
     request.onload = function () {
         if (request.status >= 200 && request.status < 400) {
             var data = JSON.parse(request.responseText);
-            var allDads = document.getElementById("allDads");
+            var allDads = E("allDads");
             var newList = document.createElement('ul');
             allDads.appendChild(newList);
             allDads.style.listStyle = 'none';
             for (var dad in data) {
                 var newItem = document.createElement('li');
-                newItem.innerHTML = "<a href='http://localhost:8080/post/" + data[dad].id + " '> " + data[dad].username + "</a>";
+                newItem.innerHTML = "<a href='javascript: void(0);' onclick=\"listPosts('http://localhost:8080/post/" + data[dad].id + "')\"> " + data[dad].username + "</a>";
                 allDads.appendChild(newItem);
             }
         } else {
@@ -176,32 +176,34 @@ function userLogin() {
 
     var data = formData.substring(1, formData.length - 1);
 
-    
-
     fetch(url, {
         method: 'POST',
         body: data,
         headers: {
             'Content-Type': 'application/json'
         }
+
     }).then(res => res.json())
             .then(function (response) {
-                console.log(response);
+                E('isloggedin').innerHTML = "";
                 sessionStorage.setItem("username", response.username);
                 sessionStorage.setItem("moderator", response.moderator);
                 sessionStorage.setItem("id", response.id);
-            }).then(location.reload())
-                    .catch(error => console.error('Error:', error));
-
+                location.reload();
+            }).catch(error => E('modalLogin').click(), loginError());
 }
 
-if (sessionStorage.getItem('username') !== null) {
-   document.getElementById('login_menu').style.display = 'none';
-   document.getElementById('signup_menu').style.display = 'none';
+function loginError() {
+    E('isloggedin').innerHTML = "<font color='red'>Wrong username and/or password!</font>";
+}
+
+if (user.username !== null) {
+    E('login_menu').style.display = 'none';
+    E('signup_menu').style.display = 'none';
+
 }
 
 function createPost() {
-
     var url = 'http://localhost:8080/post/newPost';
     var formData = JSON.stringify($("#createNewPostForm").map(function () {
         return $(this).find('*').serializeArray()
@@ -219,23 +221,21 @@ function createPost() {
     }).then(res => res.json())
             .then(response => console.log('Success:', JSON.stringify(response)))
             .catch(error => console.error('Error:', error));
-    location.reload();    
-
-
+    location.reload();
 }
 
 
 function createFormForPost() {
-    if (sessionStorage.getItem("username") === null) {
+    if (user.username === null) {
         alert("You need to sign in to be able to post!");
     } else {
-        var a = document.getElementById('createNewPostForm');
+        var a = E('createNewPostForm');
         if (a.style.display === 'none') {
             a.style.display = "block";
-            document.getElementById("postUserID").value = sessionStorage.getItem("id");
+            E("postUserID").value = user.id;
         } else {
             a.style.display = 'none';
-            document.getElementById("postUserID").value = sessionStorage.getItem("id");
+            E("postUserID").value = user.id;
         }
     }
 }
@@ -244,7 +244,7 @@ function deletePost(id) {
     var url = 'http://localhost:8080/post/deletePost';
     var data = JSON.stringify({"id": id});
 
-    
+
     fetch(url, {
         method: 'POST',
         body: data,
@@ -260,7 +260,7 @@ function deletePost(id) {
 function searchPostsbyString() {
 
     var searchString = $("#form-control").val();
-    
+
     $.ajax({
         url: '/post/search',
         type: 'POST',
@@ -270,28 +270,27 @@ function searchPostsbyString() {
         success: function (data) {
             emptyForm();
             buildForm(data);
-           
-            
+
         },
         error: function (responseTxt, statusTxt, errorThrown) {
             emptyForm();
             $("#main").html("<p>There is 0 result.</p>");
-            
+
         }
     });
 }
 
-var x = document.getElementById("form-control");
+var searchForm = E("form-control");
 
-x.addEventListener("keyup", function(event) {
-    if (event.keyCode===13) {
+searchForm.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
         searchPostsbyString();
-        
+
     }
 });
 
 function buildForm(data) {
-    var main = document.getElementById("main");
+    var main = E("main");
     for (var post in data) {
         var postItem = document.createElement('div');
         postItem.setAttribute('class', 'mb-3');
@@ -321,24 +320,24 @@ function buildForm(data) {
 }
 
 function getPostsbyCategory(sel) {
-   $.ajax({
-       url: '/post/getAll/'+sel,
-       type: 'GET',
-       success: function (data) {
-           
-           emptyForm();
-           buildForm(data);
+    $.ajax({
+        url: '/post/getAll/' + sel,
+        type: 'GET',
+        success: function (data) {
 
-       },
-       error: function (responseTxt, statusTxt, errorThrown) {
-           emptyForm();
-           $("#main").html("<p>There is 0 result.</p>");
-       }
-   });
+            emptyForm();
+            buildForm(data);
+
+        },
+        error: function (responseTxt, statusTxt, errorThrown) {
+            emptyForm();
+            $("#main").html("<p>There is 0 result.</p>");
+        }
+    });
 }
 
 function emptyForm() {
-    var main = document.getElementById("main");
+    let main = E("main");
     main.innerHTML = "";
 }
 

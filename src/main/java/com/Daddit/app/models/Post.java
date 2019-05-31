@@ -22,7 +22,7 @@ public class Post {
     private String headline;
     
     @ManyToMany(mappedBy = "posts")
-//    @JsonManagedReference
+    @JsonManagedReference
     private List<Category> categories;
     
     @OneToMany(cascade = CascadeType.ALL)

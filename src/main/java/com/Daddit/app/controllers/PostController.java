@@ -8,30 +8,23 @@ import com.Daddit.app.models.Vote;
 import com.Daddit.app.repositories.CategoryRepository;
 import com.Daddit.app.services.CategoryService;
 import com.Daddit.app.services.PostService;
-import com.google.gson.Gson;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.servlet.view.RedirectView;
 
 @CrossOrigin
 @RestController
@@ -87,19 +80,13 @@ public class PostController {
         Long id = Long.parseLong(body.get("id"));
 //        List<Category> categories = new ArrayList<>();
 //        categories.add(category);
-        // if category does not exist it will be saved in database.
 //        categoryService.addCategory(category);
-
-//        Dad dad = new Dad("teddy", "bundy");
         Dad dad = dadService.findDadById(id).get();
-//        Post newPost = new Post(content, headline, categories, dad);
 
 //        Post post = postService.newPost(new Post(content, headline, categories, dad));
-//        Post post= postService.newPost(new Post(content, headline, dad));
         Post post = new Post(content, headline, dad);
         postService.newPost(post);
         List<Post> posts = new ArrayList<>();
-//        posts.add(post);
 
         List<Category> categories = categoriesStrings.stream().map(n -> new Category(n)).collect(Collectors.toList());
         List<Category> realcategories = new ArrayList<>();
