@@ -11,6 +11,7 @@ import com.Daddit.app.services.PostService;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -123,9 +124,16 @@ public class PostController {
 
         Dad dad = dadService.findDadById(data.get("userId")).get();
 
-        Vote vote = new Vote(data.get("voteValue").intValue(), dad, post);
+        Vote newVote = new Vote(data.get("voteValue").intValue(), dad, post);
 
-        post.getVotes().add(vote);
+        for (Iterator<Vote> iterator = post.getVotes().iterator(); iterator.hasNext();) {
+            Vote oldVote = iterator.next();
+            if (oldVote.getDad().getId() == newVote.getDad().getId()) {
+                iterator.remove();
+            }
+        }
+
+        post.getVotes().add(newVote);
         return postService.updatePost(post);
     }
 
