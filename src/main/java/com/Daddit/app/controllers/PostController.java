@@ -11,6 +11,7 @@ import com.Daddit.app.services.PostService;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -91,7 +92,7 @@ public class PostController {
         List<Category> categories = categoriesStrings.stream().map(n -> new Category(n)).collect(Collectors.toList());
         List<Category> realcategories = new ArrayList<>();
 
-          for (Category c : categories) {           
+        for (Category c : categories) {
             if (!categoryRepository.findByname(c.getName()).isPresent()) {
                 posts.add(post);
                 c.setPosts(posts);
@@ -100,14 +101,13 @@ public class PostController {
                 Category oldCategory = categoryRepository.findByname(c.getName()).get();
                 posts = oldCategory.getPosts();
                 posts.add(post);
-                c=oldCategory;
+                c = oldCategory;
                 c.setPosts(posts);
                 categoryService.addCategory(c);
             }
             realcategories.add(c);
         }
         post.setCategories(realcategories);
-
 
         URI location = ServletUriComponentsBuilder.fromPath("http://localhost:8080").build().toUri();
 
@@ -129,9 +129,16 @@ public class PostController {
 
         Dad dad = dadService.findDadById(data.get("userId")).get();
 
-        Vote vote = new Vote(data.get("voteValue").intValue(), dad, post);
+        Vote newVote = new Vote(data.get("voteValue").intValue(), dad, post);
 
-        post.getVotes().add(vote);
+        for (Iterator<Vote> iterator = post.getVotes().iterator(); iterator.hasNext();) {
+            Vote oldVote = iterator.next();
+            if (oldVote.getDad().getId() == newVote.getDad().getId()) {
+                iterator.remove();
+            }
+        }
+
+        post.getVotes().add(newVote);
         return postService.updatePost(post);
     }
 
