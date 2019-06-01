@@ -74,44 +74,38 @@ public class PostController {
 
         String headline = body.get("headline");
         String content = body.get("content");
-//        Category category = new Category(body.get("category"));
         String cateString = body.get("category");
         List<String> categoriesStrings = Arrays.asList(cateString.split(","));
         Long id = Long.parseLong(body.get("id"));
-//        List<Category> categories = new ArrayList<>();
-//        categories.add(category);
-//        categoryService.addCategory(category);
         Dad dad = dadService.findDadById(id).get();
-
-//        Post post = postService.newPost(new Post(content, headline, categories, dad));
         Post post = new Post(content, headline, dad);
         postService.newPost(post);
-        List<Post> posts = new ArrayList<>();
 
         List<Category> categories = categoriesStrings.stream().map(n -> new Category(n)).collect(Collectors.toList());
         List<Category> realcategories = new ArrayList<>();
 
-          for (Category c : categories) {           
+        for (Category c : categories) {
+            List<Post> newCposts = new ArrayList<>();
+            List<Post> oldCposts = new ArrayList<>();
             if (!categoryRepository.findByname(c.getName()).isPresent()) {
-                posts.add(post);
-                c.setPosts(posts);
+                newCposts.add(post);
+                c.setPosts(newCposts);
                 categoryService.addCategory(c);
+
             } else {
                 Category oldCategory = categoryRepository.findByname(c.getName()).get();
-                posts = oldCategory.getPosts();
-                posts.add(post);
-                c=oldCategory;
-                c.setPosts(posts);
+                oldCposts = oldCategory.getPosts();
+                oldCposts.add(post);
+                c = oldCategory;
+                c.setPosts(oldCposts);
                 categoryService.addCategory(c);
             }
             realcategories.add(c);
         }
         post.setCategories(realcategories);
 
-
         URI location = ServletUriComponentsBuilder.fromPath("http://localhost:8080").build().toUri();
 
-//        return new RedirectView("http://localhost:8080");
         return post;
     }
 
